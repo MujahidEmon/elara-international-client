@@ -4,7 +4,7 @@ import { LuReplace } from "react-icons/lu";
 
 const Services = () => {
     return (
-        <div className="bg-[#FCAB35] mt-4 py-3 flex justify-around items-center text-white font-bold text-xl">
+        <div className="bg-[#FCAB35] py-5 flex justify-around items-center text-white font-bold text-xl">
             <div className="flex justify-center items-center gap-3">
                 <CiDeliveryTruck></CiDeliveryTruck>
                 <p>Free Shipping</p>
