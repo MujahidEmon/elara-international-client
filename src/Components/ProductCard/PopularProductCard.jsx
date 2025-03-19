@@ -1,7 +1,7 @@
 const PopularProductCard = ({ product }) => {
   const { name, image, price } = product;
   return (
-    <div className="card card-side bg-base-100 shadow-xl">
+    <div className="card bg-base-100 w-96 shadow-sm">
       <figure>
         <img
           src={image}

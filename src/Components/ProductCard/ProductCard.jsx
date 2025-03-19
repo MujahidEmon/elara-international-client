@@ -1,19 +1,22 @@
 
-const ProductCard = ({product}) => {
-    const {name, image} = product;
-    return (
-        <div className=" flex-auto flex flex-col items-center justify-center w-96  ">
-            <figure>
-                <img
-                src={product.image}
-                alt="Shoes" className="border object-cover h-60" />
-            </figure>
-            <div className="text-center flex flex-col items-center justify-center px-8 mt-6">
-                <p className="text-2xl">{product.name}</p>
-                <button className="btn btn-outline border-t-0 mt-auto border-x-0 w-fit">Shop Now</button>
-            </div>
-        </div>
-    );
+
+const ProductCard = ({ product }) => {
+  const { name, image } = product;
+  return (
+    <div className="card bg-base-100 p-7 w-96 shadow-sm hover:shadow-2xl">
+      <figure>
+        <img
+          src={image}
+          alt="Movie"
+          className="h-72 w-full object-cover rounded-lg"
+        />
+      </figure>
+      <div className="mt-6">
+        <h2 className="card-title">{name}</h2>
+        <p>Grab The Offer </p>
+      </div>
+    </div>
+  );
 };
 
 export default ProductCard;
