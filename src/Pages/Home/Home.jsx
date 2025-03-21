@@ -141,18 +141,19 @@ const Home = () => {
 
      {/* Normal Carousel */}
     <div className="flex lg:flex-row text-white">
-      <div  style=
+      <div className="w-1/3 h-64 flex flex-col justify-center  items-end px-11" style=
             {{
             backgroundImage:
                 "url(https://i.ibb.co.com/sJW0vqdQ/banner-image-4.webp)",
             backgroundRepeat: "no-repeat",
-            // objectFit: "cover",
             backgroundPosition: "center",
             backgroundSize: "cover",
             }}>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat tempora praesentium aperiam adipisci, id est ratione similique non. Velit laudantium soluta provident incidunt, explicabo ad beatae similique minus corporis quibusdam, blanditiis asperiores suscipit? Nostrum est deleniti vero aliquid. Delectus possimus libero nemo dolorum doloribus cupiditate molestiae ullam reprehenderit quam ducimus.</p>
+        <p className="text-amber-700">VR Fest</p>
+        <h1 className="text-white font-bold text-3xl">Latest QPad </h1>
+        <button className="cursor-pointer border-b-2 text-white">Buy Now</button>
       </div>
-      <div  style=
+      <div className="w-1/3 h-64 flex flex-col justify-center  items-end px-11 text-end" style=
             {{
             backgroundImage:
                 "url(https://i.ibb.co.com/chZzWbwR/banner-image-5-c7660f9f-ff9c-4284-9885-de48ab56d108.webp)",
@@ -161,9 +162,13 @@ const Home = () => {
             backgroundPosition: "center",
             backgroundSize: "cover",
             }}>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni ut facilis, maiores ratione quis quibusdam quia quam architecto modi molestias dolor aperiam. Hic eligendi possimus impedit nihil, iure illum dolorum minima culpa porro commodi. Nihil corporis perspiciatis eum fuga nulla voluptatibus rem eaque minus! Necessitatibus ex accusantium cumque deleniti ab.</p>
+              <p className="text-amber-700">VR Fest</p>
+              <h1 className="text-white font-bold text-3xl">Latest QPad 
+                    With Keyboard
+                </h1>
+                <button className="cursor-pointer border-b-2 text-white">Buy Now</button>
       </div>
-      <div  style=
+      <div className="w-1/3 h-64 flex flex-col justify-center  items-end px-11 text-end" style=
             {{
             backgroundImage:
                 "url(https://i.ibb.co.com/7dCKJPP0/banner-image-6.webp)",
@@ -172,7 +177,9 @@ const Home = () => {
             backgroundPosition: "center",
             backgroundSize: "cover",
             }}>
-      <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non ipsam deleniti laborum quidem eius cum necessitatibus itaque a accusamus? Facere perspiciatis, delectus iusto laborum magni voluptate corporis. Ab unde ea harum omnis, autem asperiores velit perferendis beatae similique odit excepturi est nobis quod commodi possimus mollitia impedit quibusdam quasi repellendus.</h1>
+      <p className="text-amber-700">VR Fest</p>
+      <h1 className="text-white font-bold text-end text-3xl">Latest QPad With Keyboard</h1>
+                <button className="cursor-pointer border-b-2 text-white">Buy Now</button>
       </div>
     </div>
 
