@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   return (
-    <div className="navbar bg-transparent absolute sticky">
+    <div className="navbar bg-transparent">
       <div className="flex-1">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -24,13 +26,13 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             <li>
-              <a>Home</a>
+              <Link to={'/'}>Home</Link>
             </li>
             <li>
-              <a>Products</a>
+              <Link>Products</Link>
             </li>
             <li>
-              <a>Contact Us</a>
+              <Link>Contact Us</Link>
             </li>
           </ul>
         </div>
@@ -65,7 +67,7 @@ const Navbar = () => {
               <span className="text-lg font-bold">8 Items</span>
               <span className="text-info">Subtotal: $999</span>
               <div className="card-actions">
-                <button className="btn bg-[#FCAB35] btn-block">View cart</button>
+                <Link to={'/cart'} className="btn bg-[#FCAB35] btn-block">View cart</Link>
               </div>
             </div>
           </div>
