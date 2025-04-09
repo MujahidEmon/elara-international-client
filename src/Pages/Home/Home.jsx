@@ -6,6 +6,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import PopularProductCard from "../../Components/ProductCard/PopularProductCard";
 import ProductCard from "../../Components/ProductCard/ProductCard";
 
+
 const Home = () => {
   const { products } = useContext(AuthContext);
   // console.log(products);
@@ -122,7 +123,7 @@ const Home = () => {
 
      {/* Highly Recommended Section */}
      
-     <div className="mt-32 lg:max-w-7xl mx-auto">
+     <div className="my-32 lg:max-w-7xl mx-auto">
             <div className="flex flex-col gap-4">
               <h1 className="lg:text-5xl text-3xl font-semibold ">Highly Recommended</h1>
               <p className="lg:w-2xl">Electronics products continue to drive innovation and shape the

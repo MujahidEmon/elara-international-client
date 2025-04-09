@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './Layout/Root/Root.jsx'
 import Home from './Pages/Home/Home.jsx'
 import AuthProvider from './Provider/AuthProvider.jsx'
+import ProductCart from './Pages/ProductCart/ProductCart.jsx'
 
 // routing section
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
         path: '/',
         element: <Home></Home>
       },
+      {
+        path:'/cart',
+        element: <ProductCart></ProductCart>
+      }
       
     ]
   }
