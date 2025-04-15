@@ -36,7 +36,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl"><span className="text-[#FCAB35]">Elara</span> International</a>
+        <Link to={'/'} className="btn btn-ghost text-xl"><span className="text-[#FCAB35]">Elara</span> International</Link>
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">

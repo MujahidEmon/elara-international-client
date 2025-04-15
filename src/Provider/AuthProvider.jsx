@@ -1,8 +1,14 @@
-import { createContext } from "react";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { createContext, useState } from "react";
+import auth from "../firebase/firebase.config";
+import { GoogleAuthProvider } from "firebase/auth/web-extension";
 
 
 export const AuthContext = createContext(null)
 const AuthProvider = ({children}) => {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(false)
+    const googleProvider = new GoogleAuthProvider();
     const products = [
         {
             name: 'Hoco W35 Wireless Headphone',
@@ -22,8 +28,25 @@ const AuthProvider = ({children}) => {
         }
     ]
 
+    const  login = (email, password) => {
+        return signInWithEmailAndPassword(auth, email, password)
+    }
+
+    const register = (email, password, name, photo) => {
+        return createUserWithEmailAndPassword(auth, email, password)
+    }
+
+    const GoogleSignin = () => {
+        return signInWithPopup(auth, googleProvider);
+    }
+
     const AuthInfo = {
         products,
+        login,
+        register,
+        GoogleSignin,
+        user,
+        loading
     }
     return (
         <AuthContext.Provider value={AuthInfo}>

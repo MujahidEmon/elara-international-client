@@ -6,6 +6,9 @@ import Root from './Layout/Root/Root.jsx'
 import Home from './Pages/Home/Home.jsx'
 import AuthProvider from './Provider/AuthProvider.jsx'
 import ProductCart from './Pages/ProductCart/ProductCart.jsx'
+import Registration from './Pages/Registration/Registration.jsx'
+import Login from './Pages/Login/Login.jsx'
+import PrivateRoutes from './Routes/PrivateRoutes.jsx'
 
 // routing section
 const router = createBrowserRouter([
@@ -19,7 +22,15 @@ const router = createBrowserRouter([
       },
       {
         path:'/cart',
-        element: <ProductCart></ProductCart>
+        element: <PrivateRoutes><ProductCart></ProductCart></PrivateRoutes>
+      },
+      {
+        path: '/login',
+        element:<Login></Login>
+      },
+      {
+        path: '/registration',
+        element:<Registration></Registration>
       }
       
     ]
