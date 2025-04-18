@@ -1,35 +1,106 @@
-import { createContext } from "react";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
+import auth from "../firebase/firebase.config";
+import { GoogleAuthProvider } from "firebase/auth/web-extension";
+import {
+  deleteFromCart,
+  getCartProducts,
+  saveToCart,
+} from "../Utils/LocalStroage";
 
 
-export const AuthContext = createContext(null)
-const AuthProvider = ({children}) => {
-    const products = [
-        {
-            name: 'Hoco W35 Wireless Headphone',
-            price: 1300,
-            image: 'https://www.primebazar.com/public/uploads/all/tFCNgqBJ5nC0cX632NRu2iMjp4GWOzKwfY9GLCOQ.webp'
+// creating context to access the data from the whole app
+export const AuthContext = createContext(null);
 
-        },
-        {
-            name: 'Vintage T9 Trimmer',
-            price: 445,
-            image: 'https://www.cellsii.com/images/detailed/43/vintage-t9-trimmer-professional-1_3b2y-yt.jpg'
-        },
-        {
-            name: 'Xiaomi Rechargeable Trimmer',
-            price: 1150,
-            image: 'https://shavershop.com.bd/wp-content/uploads/2022/04/ENCHEN-Boost-USB-Electric-Hair-Clipper-for-Men.jpg'
-        }
-    ]
 
-    const AuthInfo = {
-        products,
-    }
-    return (
-        <AuthContext.Provider value={AuthInfo}>
-            {children}
-        </AuthContext.Provider>
-    );
+const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [cartProducts, setCartProducts] = useState([]);
+  const googleProvider = new GoogleAuthProvider();
+
+
+//   function for firebase login
+  const login = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+
+// function for firebase register
+  const register = (email, password, name, photo) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+
+// function for google login
+  const GoogleSignin = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
+
+
+// function for logout
+  const logout = () => {
+    return signOut(auth);
+  };
+
+
+// updating user info
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      // setLoading(false)
+    });
+
+    return () => unSubscribe();
+  }, []);
+
+
+
+// load the cart products from localstorage
+  useEffect(() => {
+    const products = getCartProducts();
+    setCartProducts(products);
+  }, []);
+
+
+// function for add to cart and stored in local storage
+  const handleAddToCart = (product) => {
+    saveToCart(product);
+    const products = getCartProducts();
+    setCartProducts(products);
+  };
+
+
+// remove cart products and also from local storage
+
+  const handleRemoveFromCart = (_id) => {
+    deleteFromCart(_id);
+    const products = getCartProducts();
+    setCartProducts(products);
+  };
+
+
+//   object to pass the element
+  const AuthInfo = {
+    login,
+    register,
+    GoogleSignin,
+    user,
+    loading,
+    logout,
+    handleRemoveFromCart,
+    cartProducts,
+    handleAddToCart,
+  };
+  return (
+    <AuthContext.Provider value={AuthInfo}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;

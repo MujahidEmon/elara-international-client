@@ -1,14 +1,11 @@
-import { useContext } from "react";
 import Banner from "../../Components/Banner/Banner";
-import Services from "../../Components/Services/Services";
-import TrendingPart from "../../Components/TrendingPart/TrendingPart";
-import { AuthContext } from "../../Provider/AuthProvider";
-import PopularProductCard from "../../Components/ProductCard/PopularProductCard";
 import ProductCard from "../../Components/ProductCard/ProductCard";
+import { useLoaderData } from "react-router-dom";
 
 
 const Home = () => {
-  const { products } = useContext(AuthContext);
+  const products = useLoaderData();
+    console.log(products);
   // console.log(products);
   return (
     <div>
