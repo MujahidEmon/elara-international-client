@@ -43,7 +43,7 @@ const Navbar = () => {
               <Link to={'/'}>Home</Link>
             </li>
             <li>
-              <Link>Products</Link>
+              <Link to={'/allProducts'}>All Products</Link>
             </li>
             <li>
               <Link>Contact Us</Link>
@@ -52,15 +52,15 @@ const Navbar = () => {
         </div>
         <Link to={'/'} className="btn btn-ghost text-xl"><span className="text-[#FCAB35]">Elara</span> International</Link>
       </div>
+        <p className="font-semibold mr-3">{user?.displayName}</p>
       <div className="flex-none">
-        <p>{user?.displayName}</p>
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
-                fill="none"
+                fill="none" 
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >

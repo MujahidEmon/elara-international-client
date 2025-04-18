@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
+import Swal from 'sweetalert2'
+
 
 const Login = () => {
     // const {login} = useContext(AuthContext)
@@ -17,7 +19,12 @@ const Login = () => {
         login(email, password)
         .then(res => {
             console.log(res.user);
-            navigate('/')
+            Swal.fire({
+                icon: "success",
+                title: "Logged in",
+                footer: `${navigate('/')}`
+              });
+            // navigate('/')
         })
         .catch(error => {
             console.error(error);

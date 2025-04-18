@@ -11,6 +11,8 @@ import ProductCart from './Pages/ProductCart/ProductCart.jsx'
 import PrivateRoutes from './Routes/PrivateRoutes.jsx'
 import Login from './Pages/Login/Login.jsx'
 import Register from './Pages/Registration/Register.jsx'
+import AllProducts from './Pages/AllProducts/AllProducts.jsx'
+import { Toaster } from 'react-hot-toast'
 
 // routing section
 const router = createBrowserRouter([
@@ -20,11 +22,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home></Home>
+        element: <Home></Home>,
+        loader: ({params}) => fetch('http://localhost:5000/products')
       },
       {
         path:'/cart',
-        element: <PrivateRoutes><ProductCart></ProductCart></PrivateRoutes>
+        element: <ProductCart></ProductCart>
       },
       {
         path: '/login',
@@ -33,6 +36,11 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element:<Register></Register>
+      },
+      {
+        path: '/allProducts',
+        element: <AllProducts></AllProducts>,
+        loader: ({params}) => fetch('http://localhost:5000/products')
       }
       
     ]
@@ -43,6 +51,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
       <RouterProvider router={router}></RouterProvider>
+      <Toaster></Toaster>
     </AuthProvider>
   </StrictMode>,
 )
