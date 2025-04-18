@@ -1,24 +1,14 @@
-import { useEffect, useState } from "react";
+
+import { useContext } from "react";
 import CartCard from "../../Components/CartCard/CartCard";
-import { deleteFromCart, getCartProducts } from "../../Utils/LocalStroage";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const ProductCart = () => {
+  
+  
+  const {cartProducts} = useContext(AuthContext)
 
-
-  const [cartProducts, setCartProducts] = useState([])
-
-  // const cartProducts = getCartProducts()
-  useEffect(() => {
-    const products = getCartProducts();
-    setCartProducts(products)
-  }, [])
-
-
-  const handleRemoveFromCart = (_id) => {
-    deleteFromCart(_id)
-    const products = getCartProducts()
-    setCartProducts(products)
-}
+  
 
   
     return (
@@ -28,7 +18,7 @@ const ProductCart = () => {
         <div className="md:col-span-2 space-y-4">
 
           {
-            cartProducts.map((product, idx) => <CartCard key={idx} product={product} handleRemoveFromCart={handleRemoveFromCart}></CartCard>)
+            cartProducts.map((product, idx) => <CartCard key={idx} product={product} ></CartCard>)
           }
 
           

@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { deleteFromCart } from "../../Utils/LocalStroage";
+import { AuthContext } from "../../Provider/AuthProvider";
 
-const CartCard = ({product, handleRemoveFromCart}) => {
+const CartCard = ({product}) => {
     console.log(product);
 
+    const{handleRemoveFromCart} = useContext(AuthContext)
 
     
   return (

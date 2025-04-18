@@ -3,12 +3,14 @@ import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
 import { GoogleAuthProvider } from "firebase/auth/web-extension";
 import { useLoaderData } from "react-router-dom";
+import { deleteFromCart, getCartProducts } from "../Utils/LocalStroage";
 
 
 export const AuthContext = createContext(null)
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false)
+    const [cartProducts, setCartProducts] = useState([])
     const googleProvider = new GoogleAuthProvider();
     
 
@@ -37,6 +39,16 @@ const AuthProvider = ({children}) => {
         return () => unSubscribe();
     },[])
 
+    useEffect(() => {
+        const products = getCartProducts();
+        setCartProducts(products)
+      }, [])
+
+      const handleRemoveFromCart = (_id) => {
+          deleteFromCart(_id)
+          const products = getCartProducts()
+          setCartProducts(products)
+      }
     const AuthInfo = {
     
         login,
@@ -44,7 +56,10 @@ const AuthProvider = ({children}) => {
         GoogleSignin,
         user,
         loading,
-        logout
+        logout,
+        handleRemoveFromCart,
+        cartProducts
+
     }
     return (
         <AuthContext.Provider value={AuthInfo}>
