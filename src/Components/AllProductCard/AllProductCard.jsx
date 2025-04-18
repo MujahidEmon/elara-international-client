@@ -1,11 +1,11 @@
+import { useContext } from "react";
 import { saveToCart } from "../../Utils/LocalStroage";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const AllProductCard = ({product}) => {
+    const {handleAddToCart} = useContext(AuthContext)
 
-
-    const handleAddToCart = (product) => {
-        saveToCart(product)
-    }
+    
   return (
     <div className="bg-white flex flex-col rounded overflow-hidden shadow-md hover:scale-[1.01] transition-all relative">
       <a href="javascript:void(0)" className="block">

@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext} from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { getCartProducts } from "../../Utils/LocalStroage";
 
 const Navbar = () => {
 
