@@ -6,7 +6,7 @@ const AllProductCard = ({ product }) => {
   const { handleAddToCart } = useContext(AuthContext);
 
   return (
-    <Link  className="group relative bg-white rounded-xl w-72 overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col">
+    <Link to={`/products/${product._id}`} className="group relative bg-white rounded-xl md:w-72 w-full overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col">
       {/* Image with hover zoom and gradient overlay */}
       <div className="relative overflow-hidden h-60">
         <img

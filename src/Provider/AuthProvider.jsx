@@ -22,8 +22,10 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [allProducts, setAllProducts] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
   const googleProvider = new GoogleAuthProvider();
+  const productUrl = 'http://localhost:5000/products';
 
 
 //   function for firebase login
@@ -60,6 +62,15 @@ const AuthProvider = ({ children }) => {
     return () => unSubscribe();
   }, []);
 
+
+// useEffect to load all products
+useEffect(() => {
+  fetch(productUrl)
+  .then(res => res.json())
+  .then(data => {
+    setAllProducts(data)
+  })
+},[productUrl])
 
 
 // load the cart products from localstorage
@@ -104,7 +115,8 @@ const totalPrice = cartProducts.reduce((sum, item) => sum + Number(item.price), 
     cartProducts,
     handleAddToCart,
     totalPrice,
-    grandTotal
+    grandTotal,
+    allProducts
   };
   return (
     <AuthContext.Provider value={AuthInfo}>{children}</AuthContext.Provider>

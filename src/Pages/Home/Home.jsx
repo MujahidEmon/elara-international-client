@@ -3,10 +3,12 @@ import ProductCard from "../../Components/ProductCard/ProductCard";
 import { useLoaderData } from "react-router-dom";
 import { motion } from "framer-motion";
 import AllProductCard from "../../Components/AllProductCard/AllProductCard";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Home = () => {
-  const products = useLoaderData();
-  console.log(products);
+  const {allProducts} = useContext(AuthContext) 
+  console.log(allProducts);
 
   return (
     <div>
@@ -113,11 +115,11 @@ const Home = () => {
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl lg:text-5xl font-semibold">Highly Recommended</h1>
           <p className="max-w-2xl">
-            Electronics products continue to drive innovation and shape the way we live, work, and interact with our environment.
+            Electronics allProducts continue to drive innovation and shape the way we live, work, and interact with our environment.
           </p>
         </div>
         <div className="flex flex-col md:flex-row flex-wrap gap-6 mt-12">
-          {products.map((product, idx) => (
+          {allProducts.map((product, idx) => (
             <AllProductCard key={idx} product={product}></AllProductCard>
           ))}
         </div>
