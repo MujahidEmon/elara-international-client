@@ -5,7 +5,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 const Navbar = () => {
 
   // importing logout function
-  const {logout, user, cartProducts} = useContext(AuthContext);
+  const {logout, user, cartProducts, totalPrice} = useContext(AuthContext);
   // const products = getCartProducts()
   const handleLogout = () => {
     logout()
@@ -81,7 +81,7 @@ const Navbar = () => {
           >
             <div className="card-body">
               <span className="text-lg font-bold">{cartProducts.length} Items</span>
-              <span className="text-info">Subtotal: $999</span>
+              <span className="text-info">Subtotal: BDT {totalPrice}</span>
               <div className="card-actions">
                 <Link to={'/cart'} className="btn bg-[#FCAB35] btn-block">View cart</Link>
               </div>

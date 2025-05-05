@@ -3,7 +3,7 @@ import { deleteFromCart } from "../../Utils/LocalStroage";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const CartCard = ({product}) => {
-    console.log(product);
+    // console.log(product);
 
     const{handleRemoveFromCart} = useContext(AuthContext)
 

@@ -16,11 +16,11 @@ const Banner = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="lg:h-full h-72">
       <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
         <SwiperSlide>
           <div
-            className="text-white h-full  content-center px-12 space-y-3 "
+            className="text-white lg:h-full h-72  content-center px-12 space-y-3 "
             style={{
               backgroundImage:
                 "url(https://i.ibb.co.com/QFfDMm6V/hero-small-group.webp)",
@@ -47,7 +47,7 @@ const Banner = () => {
         </SwiperSlide>
         <SwiperSlide>
           <div
-            className="text-white h-full  content-center px-12 space-y-3 "
+            className="text-white lg:h-full h-72  content-center px-12 space-y-3 "
             style={{
               backgroundImage:
                 "url(https://i.ibb.co.com/V0Kn0p8D/slider-1400.webp)",

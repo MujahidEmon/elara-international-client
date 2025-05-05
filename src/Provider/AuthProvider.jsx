@@ -86,6 +86,12 @@ const AuthProvider = ({ children }) => {
   };
 
 
+// function to find the total bill from the cart products
+const totalPrice = cartProducts.reduce((sum, item) => sum + Number(item.price), 0);
+//   console.log("total: ",totalPrice);
+  const grandTotal = totalPrice + 120;
+
+
 //   object to pass the element
   const AuthInfo = {
     login,
@@ -97,6 +103,8 @@ const AuthProvider = ({ children }) => {
     handleRemoveFromCart,
     cartProducts,
     handleAddToCart,
+    totalPrice,
+    grandTotal
   };
   return (
     <AuthContext.Provider value={AuthInfo}>{children}</AuthContext.Provider>
