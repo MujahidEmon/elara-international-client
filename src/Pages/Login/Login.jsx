@@ -35,7 +35,7 @@ const Login = () => {
                         productId: p._id || p.productId || p.id,
                     }));
 
-                    await axios.post('http://localhost:5000/cartProducts/bulk', {
+                    await axios.post('https://elara-international-server.onrender.com/cartProducts/bulk', {
                         email: user.email,
                         products: formattedProducts,
                     });

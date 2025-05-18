@@ -12,7 +12,7 @@ const AllProducts = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/categories");
+        const res = await axios.get("https://elara-international-server.onrender.com/categories");
         setCategories(res.data);
       } catch (error) {
         console.error("Failed to fetch categories", error);
@@ -27,8 +27,8 @@ const AllProducts = () => {
     const fetchProducts = async () => {
       try {
         const url = selectedCategory
-          ? `http://localhost:5000/products?category=${selectedCategory}`
-          : "http://localhost:5000/products";
+          ? `https://elara-international-server.onrender.com/products?category=${selectedCategory}`
+          : "https://elara-international-server.onrender.com/products";
 
         const res = await axios.get(url);
         setProducts(res.data);

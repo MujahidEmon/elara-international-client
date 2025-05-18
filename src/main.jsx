@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home></Home>,
-        loader: ({params}) => fetch('http://localhost:5000/products')
+        loader: ({params}) => fetch('https://elara-international-server.onrender.com/products')
       },
       {
         path:'/cart',
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
       {
         path: '/products/:id',
         element: <ProductDetail></ProductDetail>,
-        loader: ({params}) => fetch(`http://localhost:5000/products/${params.id}`)
+        loader: ({params}) => fetch(`https://elara-international-server.onrender.com/products/${params.id}`)
       }
       
     ]

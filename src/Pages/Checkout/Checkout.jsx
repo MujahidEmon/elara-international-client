@@ -40,7 +40,7 @@ const Checkout = () => {
 
     try {
       // Place the order
-      const orderRes = await fetch("http://localhost:5000/orders", {
+      const orderRes = await fetch("https://elara-international-server.onrender.com/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +55,7 @@ const Checkout = () => {
       }
 
       // Clear the cart by email
-      const clearRes = await fetch(`http://localhost:5000/cartProducts/clear/${encodeURIComponent(user.email)}`, {
+      const clearRes = await fetch(`https://elara-international-server.onrender.com/cartProducts/clear/${encodeURIComponent(user.email)}`, {
         method: "DELETE",
       });
 

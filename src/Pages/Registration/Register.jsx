@@ -28,7 +28,7 @@ const Register = () => {
                 updateProfile(auth.currentUser, {
                     displayName: name, photoURL: photo
                 })
-                axios.post('http://localhost:5000/cartProducts/bulk', {
+                axios.post('https://elara-international-server.onrender.com/cartProducts/bulk', {
                     products: products,
                     email: res.user.email
                 })
