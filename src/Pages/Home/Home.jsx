@@ -1,10 +1,12 @@
 import Banner from "../../Components/Banner/Banner";
 import ProductCard from "../../Components/ProductCard/ProductCard";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { motion } from "framer-motion";
 import AllProductCard from "../../Components/AllProductCard/AllProductCard";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
+import AllTrimmers from "../../Components/AllTrimmers/AllTrimmers";
+import Ratings from "../../Components/Ratings/Ratings";
 
 const Home = () => {
   const {allProducts} = useContext(AuthContext) 
@@ -111,7 +113,7 @@ const Home = () => {
       </div> */}
 
       {/* Featured Section */}
-      <div className="my-14 lg:my-32 px-4 max-w-screen-xl mx-auto">
+      <div className="my-14 lg:my-32 px-4 text-center space-y-5 max-w-screen-xl mx-auto">
         <div className="flex flex-col items-center text-center gap-4">
           <h1 className="text-3xl lg:text-5xl ">Featured Products</h1>
           <p className="max-w-2xl font-extralight">
@@ -123,13 +125,18 @@ const Home = () => {
             <AllProductCard key={idx} product={product}></AllProductCard>
           ))}
         </div>
+        <button className="btn btn-outline tracking-wider border-[#FCAB35] hover:bg-[#FCAB35] hover:text-white  hover:scale-110 text-[#FCAB35]"><Link to={'/allProducts'}>View All</Link></button>
       </div>
 
 
       {/* Best Trimmer Section */}
+        <div className="my-14 lg:my-32 px-4 max-w-screen-xl mx-auto">
+          <AllTrimmers></AllTrimmers>
+        </div>
 
 
 
+      <Ratings></Ratings>
       {/* Carousel Section */}
       <div className="flex flex-col lg:flex-row text-white">
         {[

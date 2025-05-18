@@ -7,6 +7,7 @@ import "aos/dist/aos.css";
 // import { Navigation } from "swiper/modules";
 import { useEffect } from "react";
 import AOS from "aos";
+import { Link } from "react-router-dom";
 const Banner = () => {
   useEffect(() => {
     AOS.init({
@@ -23,7 +24,7 @@ const Banner = () => {
         effect="fade"
         fadeEffect={{ crossFade: true }}
         modules={[Navigation, EffectFade]}
-        className="mySwiper"
+        className="swiper-banner"
         onSlideChange={() => {
           AOS.refresh(); // 👈 Trigger AOS to re-animate
         }}>
@@ -48,7 +49,7 @@ const Banner = () => {
                 apps right on your wrist, reducing the constantly check your
                 phone.
               </p>
-              <button className="btn btn-outline border-[#FCAB35] text-[#FCAB35]">Shop Now</button>
+              <Link to={'/allProducts'}><button className="btn btn-outline border-[#FCAB35] text-[#FCAB35]">Shop Now</button></Link>
             </div>
             {/* <div className="lg:max-w-7xl mx-auto w-fit  flex flex-col  ">
            </div> */}

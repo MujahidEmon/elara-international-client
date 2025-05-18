@@ -106,11 +106,7 @@ const Footer = () => {
                                     Sale
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" className="text-gray-400 hover:text-white text-sm">
-                                    Documentation
-                                </a>
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>

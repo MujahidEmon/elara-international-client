@@ -18,7 +18,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="navbar sticky top-0 z-50 backdrop-blur-md bg-black/40 shadow-md">
+    <div className="navbar sticky top-0 z-50 backdrop-blur-md bg-white/20 shadow-md">
       <div className="flex-1">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
