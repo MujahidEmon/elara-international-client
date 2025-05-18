@@ -1,18 +1,19 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Link } from "react-router-dom";
+import { FaOpencart } from "react-icons/fa";
 
 const AllProductCard = ({ product }) => {
   const { handleAddToCart } = useContext(AuthContext);
 
   return (
-    <Link to={`/products/${product._id}`} className="group relative bg-white rounded-xl md:w-72 w-full overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col">
+    <div className="group relative  bg-base rounded-sm md:w-64 w-40 overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col">
       {/* Image with hover zoom and gradient overlay */}
-      <div className="relative overflow-hidden h-60">
+      <div className="relative overflow-hidden md:h-60 h-40">
         <img
           src={product.image}
           alt={product.productName}
-          className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
+          className="w-full h-full rounded-sm object-cover transform group-hover:scale-110 transition duration-500"
         />
         {/* Gradient overlay for readability */}
         <div className="absolute bottom-0 w-full h-1/3 bg-gradient-to-t from-black/70 to-transparent"></div>
@@ -30,23 +31,24 @@ const AllProductCard = ({ product }) => {
       </div>
 
       {/* Product Info */}
-      <div className="p-4 space-y-2 flex-grow">
-        <h3 className="text-lg font-bold text-gray-900 line-clamp-2">
-          {product.productName}
+      <div className="py-2 text-center space-y-2 flex-grow">
+        <h3 className="md:text-xl text-sm font-bold text-base-400 line-clamp-2">
+          <Link to={`/products/${product._id}`}>{product.productName}</Link>
         </h3>
-        <p className="text-gray-600 text-base">{product.price} Taka</p>
+        <p className="text-base-400 text-sm">{product.price} Taka</p>
       </div>
 
       {/* Add to Cart Button */}
       <div className="p-4 pt-0">
         <button
           onClick={() => handleAddToCart(product)}
-          className="w-full bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-medium py-2 rounded-lg transition duration-300"
+          className="w-full bg-gradient-to-r flex items-center justify-center gap-2  text-[#FCAB35] font-semibold  text-sm md:text-xl transition duration-300"
         >
+          <FaOpencart></FaOpencart>
           Add to Cart
         </button>
       </div>
-    </Link>
+    </div>
   );
 };
 

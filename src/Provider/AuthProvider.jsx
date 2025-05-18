@@ -9,10 +9,14 @@ import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
 import { GoogleAuthProvider } from "firebase/auth/web-extension";
 import {
+  decrementFromCart,
   deleteFromCart,
   getCartProducts,
+  incrementFromCart,
   saveToCart,
 } from "../Utils/LocalStroage";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 
 // creating context to access the data from the whole app
@@ -26,33 +30,34 @@ const AuthProvider = ({ children }) => {
   const [cartProducts, setCartProducts] = useState([]);
   const googleProvider = new GoogleAuthProvider();
   const productUrl = 'http://localhost:5000/products';
+  const cartProductUrl = 'http://localhost:5000/cartProducts';
 
 
-//   function for firebase login
+  //   function for firebase login
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
 
-// function for firebase register
+  // function for firebase register
   const register = (email, password, name, photo) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
 
-// function for google login
+  // function for google login
   const GoogleSignin = () => {
     return signInWithPopup(auth, googleProvider);
   };
 
 
-// function for logout
+  // function for logout
   const logout = () => {
     return signOut(auth);
   };
 
 
-// updating user info
+  // updating user info
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -63,47 +68,141 @@ const AuthProvider = ({ children }) => {
   }, []);
 
 
-// useEffect to load all products
-useEffect(() => {
-  fetch(productUrl)
-  .then(res => res.json())
-  .then(data => {
-    setAllProducts(data)
-  })
-},[productUrl])
-
-
-// load the cart products from localstorage
+  // useEffect to load all products
   useEffect(() => {
-    const products = getCartProducts();
-    setCartProducts(products);
-  }, []);
+    fetch(productUrl)
+      .then(res => res.json())
+      .then(data => {
+        setAllProducts(data)
+      })
+  }, [productUrl])
+  useEffect(() => {
+    fetch(cartProductUrl)
+      .then(res => res.json())
+      .then(data => {
+        setCartProducts(data)
+      })
+  }, [cartProductUrl])
 
 
-// function for add to cart and stored in local storage
+  // load the cart products from localstorage
+  useEffect(() => {
+    if (user) {
+      // Logged-in user => fetch from DB
+      axios.get(`http://localhost:5000/cartProducts/${user.email}`)
+        .then(res => setCartProducts(res.data))
+        .catch(err => console.log(err));
+    } else {
+      // No user => fetch from localStorage
+      const products = getCartProducts();
+      setCartProducts(products);
+    }
+  }, [user]);
+
+
+  // function for add to cart and stored in local storage
   const handleAddToCart = (product) => {
-    saveToCart(product);
-    const products = getCartProducts();
-    setCartProducts(products);
+    if (user && user.email) {
+      fetch('http://localhost:5000/cartProducts/bulk', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: user.email,
+          products: [
+            {
+              productId: product._id || product.id,
+              name: product.name,
+              price: product.price,
+              photo: product.photo,
+              quantity: 1,
+            },
+          ],
+        }),
+      })
+        .then(res => res.json())
+        .then(async (data) => {
+          toast.success("Added to cart");
+
+          // **Fetch updated cart data from backend and update state**
+          const res2 = await fetch(`http://localhost:5000/cartProducts/${user.email}`);
+          const updatedCart = await res2.json();
+          setCartProducts(updatedCart);  // Live update here
+        })
+        .catch(err => {
+          console.error("Error adding to server cart:", err);
+        });
+    } else {
+      saveToCart(product);
+      const products = getCartProducts();
+      setCartProducts(products);
+    }
   };
 
 
-// remove cart products and also from local storage
+
+  // remove cart products and also from local storage
 
   const handleRemoveFromCart = (_id) => {
-    deleteFromCart(_id);
-    const products = getCartProducts();
-    setCartProducts(products);
+    if (user) {
+      fetch(`http://localhost:5000/cartProducts/${_id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then(() => {
+          axios.get(`http://localhost:5000/cartProducts/${user.email}`)
+            .then(res => setCartProducts(res.data));
+        });
+    } else {
+      deleteFromCart(_id);
+      const products = getCartProducts();
+      setCartProducts(products);
+    }
   };
 
+  const handleIncrease = (product) => {
+    if (user) {
+      fetch(`http://localhost:5000/cartProducts/increase/${product._id}`, {
+        method: "PATCH",
+      })
+        .then((res) => res.json())
+        .then(() => {
+          axios.get(`http://localhost:5000/cartProducts/${user.email}`)
+            .then(res => setCartProducts(res.data))
+            .catch(err => console.log(err));
+        });
+    } else {
+      const updated = incrementFromCart(product._id); // local function to increase qty
+      setCartProducts(updated);
+    }
+  };
 
-// function to find the total bill from the cart products
-const totalPrice = cartProducts.reduce((sum, item) => sum + Number(item.price), 0);
-//   console.log("total: ",totalPrice);
+  const handleDecrease = (product) => {
+    if (user) {
+      fetch(`http://localhost:5000/cartProducts/decrease/${product._id}`, {
+        method: "PATCH",
+      })
+        .then((res) => res.json())
+        .then(() => {
+          axios.get(`http://localhost:5000/cartProducts/${user.email}`)
+            .then(res => setCartProducts(res.data))
+            .catch(err => console.log(err));
+        });
+    } else {
+      const updated = decrementFromCart(product._id); // local function to decrease qty or remove
+      setCartProducts(updated);
+    }
+  };
+
+  // function to find the total bill from the cart products
+  const totalPrice = cartProducts.reduce((sum, item) => 
+  sum + Number(item.price) * Number(item.quantity), 0);
+  //   console.log("total: ",totalPrice);
   const grandTotal = totalPrice + 120;
 
 
-//   object to pass the element
+  //   object to pass the element
   const AuthInfo = {
     login,
     register,
@@ -116,7 +215,9 @@ const totalPrice = cartProducts.reduce((sum, item) => sum + Number(item.price), 
     handleAddToCart,
     totalPrice,
     grandTotal,
-    allProducts
+    allProducts,
+    handleDecrease,
+    handleIncrease
   };
   return (
     <AuthContext.Provider value={AuthInfo}>{children}</AuthContext.Provider>

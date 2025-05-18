@@ -17,14 +17,14 @@ const ProductDetail = () => {
     }
 
     return (
-        <div className="bg-white p-6 rounded-xl shadow-lg items-center flex flex-col md:flex-row md:gap-10 gap-5 max-w-6xl mx-auto">
+        <div className="bg-base-100 p-6 rounded-3xl shadow-lg items-center flex flex-col md:flex-row md:gap-10 my-12 gap-5 max-w-6xl mx-auto">
             {/* Left: Image + Thumbnails */}
             <div className="flex-1">
                 <div className=" ">
                     <img
                         src={selectedImage}
                         alt={product.name}
-                        className="w-full rounded-2xl h-[600px] object-contain"
+                        className="w-fit rounded-3xl  h-[500px] object-contain"
                     />
                 </div>
 
@@ -32,7 +32,7 @@ const ProductDetail = () => {
 
             {/* Right: Product Info */}
             <div className="flex-1">
-                <h2 className="text-2xl font-bold text-gray-800">{product.productName}</h2>
+                <h2 className="text-2xl font-bold text-base-content">{product.productName}</h2>
                 <div className="flex items-center gap-2 mt-1">
 
                     {/* <span className="text-gray-600 text-sm">{product.reviews} Reviews</span> */}
@@ -40,14 +40,14 @@ const ProductDetail = () => {
 
                 {/* Price */}
                 <div className="mt-4 flex items-baseline gap-3">
-                    <h3 className="text-2xl font-semibold text-gray-900">${product.price}</h3>
+                    <h3 className="text-2xl font-semibold text-base-content">${product.price}</h3>
                     <span className="line-through text-gray-400">${product.oldPrice}</span>
                     <span className="text-sm text-gray-500">Tax included</span>
                 </div>
 
                 {/* Color Options */}
                 <div className="mt-6">
-                    {/* <h4 className="font-semibold text-gray-800 mb-2">Choose a Color</h4> */}
+                    {/* <h4 className="font-semibold text-base-content mb-2">Choose a Color</h4> */}
                     <div className="flex gap-3">
                         {/* {product.colors.map((color, idx) => (
               <div
@@ -73,7 +73,7 @@ const ProductDetail = () => {
                         Add to cart
                     </button>
                 </div>
-                <p className="text-gray-600 mt-4"><span className="font-bold">Details: </span>{product.description}</p>
+                <p className="text-base-content mt-4"><span className="font-bold">Details: </span>{product.description}</p>
             </div>
         </div>
     );

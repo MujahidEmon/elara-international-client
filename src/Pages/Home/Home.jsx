@@ -30,39 +30,39 @@ const Home = () => {
         }}
       >
         <div className="text-center max-w-3xl">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Explore the Future of Tech</h1>
+          <h1 className="text-3xl md:text-5xl font-medium mb-4">Explore the Future of Tech</h1>
           <p className="text-base md:text-lg">Scroll Down And Jump To The Tech World</p>
         </div>
       </motion.div>
 
       {/* 3 Banners Section */}
-      {/* <div data-aos="fade-up" className="max-w-screen-xl mx-auto flex flex-col lg:flex-row">
-        {[
-          "https://i.ibb.co.com/prhfZ1Cg/banner-image.webp",
-          "https://i.ibb.co.com/rf3kprph/banner-image-2.webp",
-          "https://i.ibb.co.com/8DYHLnwk/banner-image-3.webp",
-        ].map((url, idx) => (
-          <div
-            key={idx}
-            className="w-full lg:w-1/3 h-72 content-center px-6 py-6"
-            style={{
-              backgroundImage: `url(${url})`,
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-            }}
-          >
-            <p className="text-base text-red-500">New Arrival</p>
-            <h1 className="text-white font-bold text-2xl md:text-3xl leading-tight">
-              Latest QPad <br /> With Keyboard
-            </h1>
-            <button className="mt-2 cursor-pointer border-b-2 text-white">Buy Now</button>
-          </div>
-        ))}
-      </div> */}
+        {/* <div data-aos="fade-up" className="max-w-screen-xl mx-auto flex flex-col lg:flex-row">
+          {[
+            "https://i.ibb.co.com/prhfZ1Cg/banner-image.webp",
+            "https://i.ibb.co.com/rf3kprph/banner-image-2.webp",
+            "https://i.ibb.co.com/8DYHLnwk/banner-image-3.webp",
+          ].map((url, idx) => (
+            <div
+              key={idx}
+              className="w-full lg:w-1/3 h-72 content-center px-6 py-6"
+              style={{
+                backgroundImage: `url(${url})`,
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+              }}
+            >
+              <p className="text-base text-red-500">New Arrival</p>
+              <h1 className="text-white font-bold text-2xl md:text-3xl leading-tight">
+                Latest QPad <br /> With Keyboard
+              </h1>
+              <button className="mt-2 cursor-pointer border-b-2 text-white">Buy Now</button>
+            </div>
+          ))}
+        </div> */}
 
       {/* Category Section */}
-      <div className="mt-12 lg:mt-32 px-4">
+      {/* <div className="mt-12 lg:mt-32 px-4">
         <div className="text-center flex justify-center items-center flex-col space-y-4">
           <h1 className="text-3xl lg:text-5xl font-semibold">Choose Your Category</h1>
           <p className="max-w-2xl">
@@ -108,22 +108,27 @@ const Home = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
-      {/* Highly Recommended Section */}
+      {/* Featured Section */}
       <div className="my-14 lg:my-32 px-4 max-w-screen-xl mx-auto">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-3xl lg:text-5xl font-semibold">Highly Recommended</h1>
-          <p className="max-w-2xl">
+        <div className="flex flex-col items-center text-center gap-4">
+          <h1 className="text-3xl lg:text-5xl ">Featured Products</h1>
+          <p className="max-w-2xl font-extralight">
             Electronics allProducts continue to drive innovation and shape the way we live, work, and interact with our environment.
           </p>
         </div>
-        <div className="flex flex-col md:flex-row flex-wrap gap-6 mt-12">
-          {allProducts.map((product, idx) => (
+        <div className="md:flex grid grid-cols-2 md:flex-row flex-wrap px-4 md:px-0 md:gap-18 gap-2  mt-12">
+          {allProducts.slice(0,4).map((product, idx) => (
             <AllProductCard key={idx} product={product}></AllProductCard>
           ))}
         </div>
       </div>
+
+
+      {/* Best Trimmer Section */}
+
+
 
       {/* Carousel Section */}
       <div className="flex flex-col lg:flex-row text-white">
