@@ -49,7 +49,7 @@ const AllProducts = () => {
 
         {/* Category Dropdown */}
         <div onChange={(e) => setSelectedCategory(e.target.value)} className="dropdown dropdown-center">
-          <div tabIndex={0} role="button" className="btn m-1">Select Category  <FiFilter color="white"></FiFilter></div>
+          <div tabIndex={0} role="button" className="btn m-1">Select Category  <FiFilter color="orange"></FiFilter></div>
           <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
             <li>
               <a

@@ -54,7 +54,7 @@ const Navbar = () => {
         </div>
         <Link to={'/'} className="btn btn-ghost text-xl"><span className="text-[#FCAB35]">Elara</span> International</Link>
       </div>
-      <p className="font-semibold mr-3">{user?.displayName}</p>
+      <p className="font-semibold lg:flex hidden mr-3">{user?.displayName}</p>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">

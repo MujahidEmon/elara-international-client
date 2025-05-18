@@ -7,10 +7,10 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const { cartProducts, totalPrice, grandTotal } = useContext(AuthContext);
+  const { cartProducts, totalPrice, grandTotal, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
 
     if (cartProducts.length < 1) {
@@ -35,26 +35,55 @@ const Checkout = () => {
       grandTotal,
       totalPrice,
       cartProducts,
-      status: "pending",
+      status: "Pending",
     };
 
-    fetch("http://localhost:5000/orders", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(newOrder),
-    })
-      .then((res) => res.json())
-      .then((data) => {
+    try {
+      // Place the order
+      const orderRes = await fetch("http://localhost:5000/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newOrder),
+      });
+
+      // Check if order placement succeeded
+      if (!orderRes.ok) {
+        const errorData = await orderRes.json();
+        throw new Error(errorData.message || "Failed to place order");
+      }
+
+      // Clear the cart by email
+      const clearRes = await fetch(`http://localhost:5000/cartProducts/clear/${encodeURIComponent(user.email)}`, {
+        method: "DELETE",
+      });
+
+      const clearData = await clearRes.json();
+
+      if (clearRes.ok && clearData.success) {
         Swal.fire({
           title: "Order Placed Successfully",
           icon: "success",
         });
-        localStorage.clear();
-        window.location.reload();
-      });
+
+        // Clear localStorage if you're storing cart there
+        localStorage.removeItem("cartProducts");
+
+        // Reload page or navigate to order summary/homepage
+        // window.location.reload();
+        // OR: navigate("/orders"); if you want to route somewhere else
+
+      } else {
+        toast.error("Order placed but cart not cleared");
+      }
+    } catch (error) {
+      console.error("Error placing order:", error);
+      toast.error(error.message || "Something went wrong while placing your order.");
+    }
   };
+
+
 
   return (
     <div>
