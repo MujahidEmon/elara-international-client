@@ -1,8 +1,10 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/effect-fade"; // 👈 for fade effect
 import "aos/dist/aos.css";
-import { Navigation } from "swiper/modules";
+// import { Navigation } from "swiper/modules";
 import { useEffect } from "react";
 import AOS from "aos";
 const Banner = () => {
@@ -16,11 +18,18 @@ const Banner = () => {
   }, []);
 
   return (
-    <div className="">
-      <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+    <div className="lg:h-full h-72">
+      <Swiper navigation={true}
+        effect="fade"
+        fadeEffect={{ crossFade: true }}
+        modules={[Navigation, EffectFade]}
+        className="mySwiper"
+        onSlideChange={() => {
+          AOS.refresh(); // 👈 Trigger AOS to re-animate
+        }}>
         <SwiperSlide>
           <div
-            className="text-white h-full  content-center px-12 space-y-3 "
+            className="text-white lg:h-full h-72  content-center px-12 space-y-3 "
             style={{
               backgroundImage:
                 "url(https://i.ibb.co.com/QFfDMm6V/hero-small-group.webp)",
@@ -30,16 +39,16 @@ const Banner = () => {
             }}
           >
             <div data-aos="fade-up" className="space-y-7">
-              <h1 className="font-semibold text-2xl lg:text-6xl">
-                Grab the best deal <br></br> on Smartwatches
+              <h1 className="font-extralight tracking-tight text-2xl lg:text-5xl">
+                Grab the best deal on<br></br> <span className="font-semibold tracking-widest uppercase">Smartwatches</span>
               </h1>
-              <p>
+              <p className="font-extralight">
                 Smartwatches provide quick access to notifications, calls,
                 messages, and <br />
                 apps right on your wrist, reducing the constantly check your
                 phone.
               </p>
-              <button className="btn btn-outline rounded-4xl">Shop Now</button>
+              <button className="btn btn-outline border-[#FCAB35] text-[#FCAB35]">Shop Now</button>
             </div>
             {/* <div className="lg:max-w-7xl mx-auto w-fit  flex flex-col  ">
            </div> */}
@@ -47,7 +56,7 @@ const Banner = () => {
         </SwiperSlide>
         <SwiperSlide>
           <div
-            className="text-white h-full  content-center px-12 space-y-3 "
+            className="text-white lg:h-full h-72  content-center px-12 space-y-3 "
             style={{
               backgroundImage:
                 "url(https://i.ibb.co.com/V0Kn0p8D/slider-1400.webp)",
@@ -58,15 +67,15 @@ const Banner = () => {
             }}
           >
             <div data-aos="fade-up" className="space-y-7">
-              <h1 className="font-semibold text-2xl lg:text-6xl">
+              <h1 className="font-extralight text-2xl lg:text-6xl">
                 Next Generation<br></br> Virtual Reality..
               </h1>
-              <p>
+              <p className="font-extralight">
                 VR is the most quick access to notifications, calls, messages,{" "}
                 <br />
                 apps right on your wrist, reducing the constantly check.
               </p>
-              <button className="btn btn-outline rounded-4xl">Shop Now</button>
+              <button className="btn btn-outline border-[#FCAB35] text-[#FCAB35]">Shop Now</button>
             </div>
           </div>
         </SwiperSlide>

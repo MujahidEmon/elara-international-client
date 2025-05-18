@@ -13,6 +13,8 @@ import Login from './Pages/Login/Login.jsx'
 import Register from './Pages/Registration/Register.jsx'
 import AllProducts from './Pages/AllProducts/AllProducts.jsx'
 import { Toaster } from 'react-hot-toast'
+import Checkout from './Pages/Checkout/Checkout.jsx'
+import ProductDetail from './Pages/ProductDetail/ProductDetail.jsx'
 
 // routing section
 const router = createBrowserRouter([
@@ -39,8 +41,20 @@ const router = createBrowserRouter([
       },
       {
         path: '/allProducts',
-        element: <AllProducts></AllProducts>,
-        loader: ({params}) => fetch('http://localhost:5000/products')
+        element: <AllProducts></AllProducts>
+      },
+      {
+        path: '/checkout',
+        element: <Checkout></Checkout>
+      },
+      {
+        path: '/productDetail',
+        element: <ProductDetail></ProductDetail>
+      },
+      {
+        path: '/products/:id',
+        element: <ProductDetail></ProductDetail>,
+        loader: ({params}) => fetch(`http://localhost:5000/products/${params.id}`)
       }
       
     ]

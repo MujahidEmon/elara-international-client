@@ -1,188 +1,160 @@
 import Banner from "../../Components/Banner/Banner";
 import ProductCard from "../../Components/ProductCard/ProductCard";
 import { useLoaderData } from "react-router-dom";
-
+import { motion } from "framer-motion";
+import AllProductCard from "../../Components/AllProductCard/AllProductCard";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Home = () => {
-  const products = useLoaderData();
-    console.log(products);
-  // console.log(products);
+  const {allProducts} = useContext(AuthContext) 
+  console.log(allProducts);
+
   return (
     <div>
-      <Banner></Banner>
+      <Banner />
 
-      {/*  */}
-      <div className="max-w-lvw flex lg:flex-row flex-col">
-        <div className="w-1/3 h-72 content-center  px-11" style=
-            {{
-            backgroundImage:
-                "url(https://i.ibb.co.com/prhfZ1Cg/banner-image.webp)",
-            backgroundRepeat: "no-repeat",
-            // objectFit: "cover",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            }}>
-                <p className="text-base text-red-500">New Arrival</p>
-                <h1 className="text-white font-bold text-3xl">Latest QPad <br />
-                    With Keyboard
-                </h1>
-                <button className="cursor-pointer border-b-2 text-white">Buy Now</button>
-            
+      {/* Fixed Background Animation Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="h-screen flex items-center justify-center text-white px-4 md:px-6"
+        style={{
+          backgroundImage: "url('https://i.ibb.co/sJW0vqdQ/banner-image-4.webp')",
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="text-center max-w-3xl">
+          <h1 className="text-3xl md:text-5xl font-medium mb-4">Explore the Future of Tech</h1>
+          <p className="text-base md:text-lg">Scroll Down And Jump To The Tech World</p>
         </div>
-        <div className="w-1/3 h-72 content-center  px-11" style=
-            {{
-            backgroundImage:
-                "url(https://i.ibb.co.com/rf3kprph/banner-image-2.webp)",
-            backgroundRepeat: "no-repeat",
-            // objectFit: "cover",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            }}>
-                <p className="text-base text-red-500">New Arrival</p>
-                <h1 className="text-white font-bold text-3xl">Latest QPad <br />
-                    With Keyboard
-                </h1>
-                <button className="cursor-pointer border-b-2 text-white">Buy Now</button>
-            
-        </div>
-        <div className="w-1/3 h-72 content-center  px-11" style=
-            {{
-            backgroundImage:
-                "url(https://i.ibb.co.com/8DYHLnwk/banner-image-3.webp)",
-            backgroundRepeat: "no-repeat",
-            // objectFit: "cover",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            }}>
-                <p className="text-base text-red-500">New Arrival</p>
-                <h1 className="text-white font-bold text-3xl">Latest QPad <br />
-                    With Keyboard
-                </h1>
-                <button className="cursor-pointer border-b-2 text-white">Buy Now</button>
-            
-        </div>
-      </div>
+      </motion.div>
 
+      {/* 3 Banners Section */}
+        {/* <div data-aos="fade-up" className="max-w-screen-xl mx-auto flex flex-col lg:flex-row">
+          {[
+            "https://i.ibb.co.com/prhfZ1Cg/banner-image.webp",
+            "https://i.ibb.co.com/rf3kprph/banner-image-2.webp",
+            "https://i.ibb.co.com/8DYHLnwk/banner-image-3.webp",
+          ].map((url, idx) => (
+            <div
+              key={idx}
+              className="w-full lg:w-1/3 h-72 content-center px-6 py-6"
+              style={{
+                backgroundImage: `url(${url})`,
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+              }}
+            >
+              <p className="text-base text-red-500">New Arrival</p>
+              <h1 className="text-white font-bold text-2xl md:text-3xl leading-tight">
+                Latest QPad <br /> With Keyboard
+              </h1>
+              <button className="mt-2 cursor-pointer border-b-2 text-white">Buy Now</button>
+            </div>
+          ))}
+        </div> */}
 
-     {/* Category Section */}
-
-     <div className="mt-32">
+      {/* Category Section */}
+      {/* <div className="mt-12 lg:mt-32 px-4">
         <div className="text-center flex justify-center items-center flex-col space-y-4">
-            <h1 className="lg: text-5xl font-semibold text-center">Choose Your Category</h1>
-            <p className="lg:w-2xl ">Smartwatches provide quick access to notifications, calls, messages, and
-            apps right on your wrist, reducing the constantly check your phone</p>
+          <h1 className="text-3xl lg:text-5xl font-semibold">Choose Your Category</h1>
+          <p className="max-w-2xl">
+            Smartwatches provide quick access to notifications, calls, messages, and apps right on your wrist, reducing the need to constantly check your phone.
+          </p>
         </div>
-        <div className="flex lg:flex-row justify-between lg:max-w-7xl mx-auto mt-12 gap-10">
-          <div className="flex flex-col justify-center gap-3 items-center group cursor-pointer">
-          <div className="w-52 h-52 rounded-full overflow-hidden relative">
-                <img 
-                  src="https://i.ibb.co.com/ZRZX4YbP/Rectangle-395.webp" 
-                  
+        <div className="flex flex-wrap justify-center gap-6 mt-12 max-w-screen-xl mx-auto">
+          {[
+            {
+              title: "Home Appliances",
+              url: "https://i.ibb.co.com/ZRZX4YbP/Rectangle-395.webp",
+            },
+            {
+              title: "PC & Laptops",
+              url: "https://i.ibb.co.com/zWtqn9HS/Rectangle-396.webp",
+            },
+            {
+              title: "Kitchen Appliances",
+              url: "https://i.ibb.co.com/Hpn9ybzJ/Rectangle-397.webp",
+            },
+            {
+              title: "Phone & Tablet",
+              url: "https://i.ibb.co.com/kgCfZ5Kt/Rectangle-398.webp",
+            },
+            {
+              title: "Accessories",
+              url: "https://i.ibb.co.com/V0jfqtxK/Rectangle-399.webp",
+            },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="flex flex-col justify-center items-center gap-3 group cursor-pointer"
+            >
+              <div className="w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden relative">
+                <img
+                  src={item.url}
                   className="w-full h-full object-cover rounded-full transition-transform duration-300 absolute group-hover:scale-110"
+                  alt={item.title}
                 />
               </div>
-            
-            <h1 className="font-semibold text-2xl">Home Appliances</h1>
-            <p>1 Item</p>
-          </div>
-          <div className="flex flex-col justify-center gap-3 group items-center cursor-pointer">
-            <div className="w-52 h-52 relative overflow-hidden rounded-full">
-              <img src="https://i.ibb.co.com/zWtqn9HS/Rectangle-396.webp" className="rounded-full object-cover transition-transform group-hover:scale-110 absolute :" alt="" />
+              <h1 className="font-semibold text-xl md:text-2xl">{item.title}</h1>
+              <p>1 Item</p>
             </div>
-            <h1 className="font-semibold text-2xl">PC & Laptops</h1>
-            <p>1 Item</p>
-          </div>
-          <div className="flex flex-col justify-center gap-3 items-center group cursor-pointer">
-            <div className="h-52 w-52 relative rounded-full overflow-hidden">
-              <img src="https://i.ibb.co.com/Hpn9ybzJ/Rectangle-397.webp" className="rounded-full transition-transform group-hover:scale-110 absolute" alt="" />  
-            </div>
-            <h1 className="font-semibold text-2xl">Kitchen Appliances</h1>
-            <p>1 Item</p>
-          </div>
-          <div className="flex flex-col justify-center gap-3 group items-center cursor-pointer">
-            <div className="relative h-52 w-52 overflow-hidden rounded-full">
-              <img src="https://i.ibb.co.com/kgCfZ5Kt/Rectangle-398.webp" className="rounded-full absolute transition-transform group-hover:scale-110" alt="" />
-            </div>
-            <h1 className="font-semibold text-2xl">Phone & Tablet</h1>
-            <p>1 Item</p>
-          </div>
-          <div className="flex flex-col justify-center gap-3 items-center group cursor-pointer">
-            <div className="overflow-hidden rounded-full h-52 w-52 relative">
-              <img src="https://i.ibb.co.com/V0jfqtxK/Rectangle-399.webp" className="rounded-full transition-transform group-hover:scale-110 absolute" alt="" />
-            </div>
-            <h1 className="font-semibold text-2xl">Accessories</h1>
-            <p>1 Item</p>
-          </div>
+          ))}
         </div>
-     </div>
+      </div> */}
 
-
-
-     {/* Highly Recommended Section */}
-     
-     <div className="my-32 lg:max-w-7xl mx-auto">
-            <div className="flex flex-col gap-4">
-              <h1 className="lg:text-5xl text-3xl font-semibold ">Highly Recommended</h1>
-              <p className="lg:w-2xl">Electronics products continue to drive innovation and shape the
-              way we live, work, and interact with our environment.</p>
-            </div>
-            <div className="flex justify-between mt-12 flex-row gap-3">
-              {products.map((product, idx) => (
-                <ProductCard
-                  key={idx}
-                  product={product}
-                ></ProductCard>
-              ))}
-            </div>
-     </div>
-
-
-     {/* Normal Carousel */}
-    <div className="flex lg:flex-row text-white">
-      <div className="w-1/3 h-64 flex flex-col justify-center  items-end px-11" style=
-            {{
-            backgroundImage:
-                "url(https://i.ibb.co.com/sJW0vqdQ/banner-image-4.webp)",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            }}>
-        <p className="text-amber-700">VR Fest</p>
-        <h1 className="text-white font-bold text-3xl">Latest QPad </h1>
-        <button className="cursor-pointer border-b-2 text-white">Buy Now</button>
+      {/* Featured Section */}
+      <div className="my-14 lg:my-32 px-4 max-w-screen-xl mx-auto">
+        <div className="flex flex-col items-center text-center gap-4">
+          <h1 className="text-3xl lg:text-5xl ">Featured Products</h1>
+          <p className="max-w-2xl font-extralight">
+            Electronics allProducts continue to drive innovation and shape the way we live, work, and interact with our environment.
+          </p>
+        </div>
+        <div className="md:flex grid grid-cols-2 md:flex-row flex-wrap px-4 md:px-0 md:gap-18 gap-2  mt-12">
+          {allProducts.slice(0,4).map((product, idx) => (
+            <AllProductCard key={idx} product={product}></AllProductCard>
+          ))}
+        </div>
       </div>
-      <div className="w-1/3 h-64 flex flex-col justify-center  items-end px-11 text-end" style=
-            {{
-            backgroundImage:
-                "url(https://i.ibb.co.com/chZzWbwR/banner-image-5-c7660f9f-ff9c-4284-9885-de48ab56d108.webp)",
-            backgroundRepeat: "no-repeat",
-            // objectFit: "cover",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            }}>
-              <p className="text-amber-700">VR Fest</p>
-              <h1 className="text-white font-bold text-3xl">Latest QPad 
-                    With Keyboard
-                </h1>
-                <button className="cursor-pointer border-b-2 text-white">Buy Now</button>
+
+
+      {/* Best Trimmer Section */}
+
+
+
+      {/* Carousel Section */}
+      <div className="flex flex-col lg:flex-row text-white">
+        {[
+          "https://i.ibb.co.com/sJW0vqdQ/banner-image-4.webp",
+          "https://i.ibb.co.com/chZzWbwR/banner-image-5-c7660f9f-ff9c-4284-9885-de48ab56d108.webp",
+          "https://i.ibb.co.com/7dCKJPP0/banner-image-6.webp",
+        ].map((url, idx) => (
+          <div
+            key={idx}
+            className="w-full lg:w-1/3 h-64 flex flex-col justify-center items-end px-6 py-8 text-right"
+            style={{
+              backgroundImage: `url(${url})`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }}
+          >
+            <p className="text-amber-700">VR Fest</p>
+            <h1 className="text-white font-bold text-2xl md:text-3xl">
+              Latest QPad {idx === 1 ? "With Keyboard" : ""}
+            </h1>
+            <button className="mt-2 cursor-pointer border-b-2 text-white">Buy Now</button>
+          </div>
+        ))}
       </div>
-      <div className="w-1/3 h-64 flex flex-col justify-center  items-end px-11 text-end" style=
-            {{
-            backgroundImage:
-                "url(https://i.ibb.co.com/7dCKJPP0/banner-image-6.webp)",
-            backgroundRepeat: "no-repeat",
-            // objectFit: "cover",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            }}>
-      <p className="text-amber-700">VR Fest</p>
-      <h1 className="text-white font-bold text-end text-3xl">Latest QPad With Keyboard</h1>
-                <button className="cursor-pointer border-b-2 text-white">Buy Now</button>
-      </div>
-    </div>
-
-
-
     </div>
   );
 };

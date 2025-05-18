@@ -2,14 +2,15 @@ import { useContext } from "react";
 import { deleteFromCart } from "../../Utils/LocalStroage";
 import { AuthContext } from "../../Provider/AuthProvider";
 
-const CartCard = ({product}) => {
-    console.log(product);
+const CartCard = ({ product }) => {
+  // console.log(product);
 
-    const{handleRemoveFromCart} = useContext(AuthContext)
+  const { handleRemoveFromCart, handleDecrease, handleIncrease } = useContext(AuthContext)
 
-    
+
+
   return (
-    <div className="flex gap-4 bg-white px-4 py-6 rounded-md shadow-[0_2px_12px_-3px_rgba(61,63,68,0.3)]">
+    <div className="flex border-[#FCAB35] border  gap-4 bg-base text-base px-4 py-6 rounded-md shadow-2xl">
       <div className="flex gap-4">
         <div className="w-28 h-28 max-sm:w-24 max-sm:h-24 shrink-0">
           <img
@@ -20,19 +21,20 @@ const CartCard = ({product}) => {
 
         <div className="flex flex-col gap-4">
           <div>
-            <h3 className="text-sm sm:text-base font-semibold text-slate-900">
+            <h3 className="text-sm sm:text-base font-semibold ">
               {product.productName}
             </h3>
-            <p className="text-sm font-semibold text-slate-500 mt-2 flex items-center gap-2">
+            {/* <p className="text-sm font-semibold  mt-2 flex items-center gap-2">
               Color:{" "}
               <span className="inline-block w-5 h-5 rounded-md bg-[#ac7f48]"></span>
-            </p>
+            </p> */}
           </div>
 
           <div className="mt-auto flex items-center gap-3">
             <button
+              onClick={() => handleDecrease(product)}
               type="button"
-              className="flex items-center justify-center w-5 h-5 bg-slate-400 outline-none rounded-full"
+              className="flex items-center justify-center w-5 h-5 bg-base outline-none rounded-full"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -45,8 +47,9 @@ const CartCard = ({product}) => {
                 ></path>
               </svg>
             </button>
-            <span className="font-semibold text-sm leading-[18px]">2</span>
+            <span className="font-semibold text-sm leading-[18px]">{product.quantity}</span>
             <button
+              onClick={() => handleIncrease(product)}
               type="button"
               className="flex items-center justify-center w-5 h-5 bg-slate-800 outline-none rounded-full"
             >
@@ -66,29 +69,29 @@ const CartCard = ({product}) => {
       </div>
       <div className="ml-auto flex flex-col">
         <div className="flex items-start gap-4 justify-end">
-          
 
 
-        {/* Remove from Cart Button */}
+
+          {/* Remove from Cart Button */}
           <button onClick={() => handleRemoveFromCart(product._id)}>
             <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4 cursor-pointer fill-slate-400 hover:fill-red-600 inline-block"
-                viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-4 h-4 cursor-pointer fill-slate-400 hover:fill-red-600 inline-block"
+              viewBox="0 0 24 24"
             >
-                <path
+              <path
                 d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
                 data-original="#000000"
-                ></path>
-                <path
+              ></path>
+              <path
                 d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
                 data-original="#000000"
-                ></path>
+              ></path>
             </svg>
           </button>
         </div>
-        <h3 className="text-sm sm:text-base font-semibold text-slate-900 mt-auto">
-          {product.price} Taka
+        <h3 className="text-sm sm:text-base font-semibold  mt-auto">
+          {product.price * product.quantity} Taka
         </h3>
       </div>
     </div>
