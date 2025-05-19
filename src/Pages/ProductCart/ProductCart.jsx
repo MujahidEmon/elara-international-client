@@ -12,7 +12,7 @@ const ProductCart = () => {
       <div className="grid md:grid-cols-3 gap-10 mt-8">
         {/* left side */}
         <div className="md:col-span-2 space-y-4">
-          {cartProducts.map((product, idx) => (
+          {cartProducts.length==0 ? <Link className=" flex  items-center" to={'/allProducts'}><button className="btn btn-outline w-full mt-24 border-[#FCAB35] text-[#FCAB35]">Browse Product</button></Link>: cartProducts.map((product, idx) => (
             <CartCard key={idx} product={product}></CartCard>
           ))}
         </div>

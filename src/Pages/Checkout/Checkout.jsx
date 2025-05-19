@@ -11,77 +11,82 @@ const Checkout = () => {
   const navigate = useNavigate();
 
   const handlePlaceOrder = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (cartProducts.length < 1) {
-      toast.error("No Items in Cart");
-      navigate("/");
-      return;
+  if (cartProducts.length < 1) {
+    toast.error("No Items in Cart");
+    navigate("/");
+    return;
+  }
+
+  const form = new FormData(e.currentTarget);
+  const name = form.get("name");
+  const phone = form.get("phone");
+  const email = form.get("email");
+  const address = form.get("address");
+  const note = form.get("note");
+
+  const newOrder = {
+    name,
+    email,
+    phone,
+    address,
+    note,
+    grandTotal,
+    totalPrice,
+    cartProducts,
+    status: "Pending",
+  };
+
+  try {
+    // Place the order
+    const orderRes = await fetch("https://elara-international-server.onrender.com/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newOrder),
+    });
+
+    // Check if order placement succeeded
+    if (!orderRes.ok) {
+      const errorData = await orderRes.json();
+      throw new Error(errorData.message || "Failed to place order");
     }
 
-    const form = new FormData(e.currentTarget);
-    const name = form.get("name");
-    const phone = form.get("phone");
-    const email = form.get("email");
-    const address = form.get("address");
-    const note = form.get("note");
-
-    const newOrder = {
-      name,
-      email,
-      phone,
-      address,
-      note,
-      grandTotal,
-      totalPrice,
-      cartProducts,
-      status: "Pending",
-    };
-
-    try {
-      // Place the order
-      const orderRes = await fetch("https://elara-international-server.onrender.com/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newOrder),
-      });
-
-      // Check if order placement succeeded
-      if (!orderRes.ok) {
-        const errorData = await orderRes.json();
-        throw new Error(errorData.message || "Failed to place order");
-      }
-
-      // Clear the cart by email
+    // === Clear cart conditionally ===
+    if (user?.email) {
+      // If user is logged in, clear cart from database
       const clearRes = await fetch(`https://elara-international-server.onrender.com/cartProducts/clear/${encodeURIComponent(user.email)}`, {
         method: "DELETE",
       });
 
       const clearData = await clearRes.json();
 
-      if (clearRes.ok && clearData.success) {
-        Swal.fire({
-          title: "Order Placed Successfully",
-          icon: "success",
-        });
-
-        // Clear localStorage if you're storing cart there
-        localStorage.removeItem("cartProducts");
-
-        // Reload page or navigate to order summary/homepage
-        // window.location.reload();
-        // OR: navigate("/orders"); if you want to route somewhere else
-
-      } else {
-        toast.error("Order placed but cart not cleared");
+      if (!clearRes.ok || !clearData.success) {
+        toast.error("Order placed but cart not cleared from database.");
       }
-    } catch (error) {
-      console.error("Error placing order:", error);
-      toast.error(error.message || "Something went wrong while placing your order.");
+    } else {
+      // Not logged in, just clear localStorage
+      localStorage.removeItem("cartProducts");
     }
-  };
+
+    // Show success message
+    Swal.fire({
+      title: "Order Placed Successfully",
+      icon: "success",
+    });
+
+    // Redirect or reload
+    // navigate("/orders"); // Optional
+    // window.location.reload(); // Optional
+
+  } catch (error) {
+    console.error("Error placing order:", error);
+    toast.error(error.message || "Something went wrong while placing your order.");
+  }
+};
+
 
 
 
