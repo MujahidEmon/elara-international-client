@@ -28,6 +28,31 @@ const Banner = () => {
         onSlideChange={() => {
           AOS.refresh(); // 👈 Trigger AOS to re-animate
         }}>
+          <SwiperSlide>
+          <div
+            className="text-white lg:h-full h-72  content-center px-12 space-y-3 "
+            style={{
+              backgroundImage:
+                "url(https://i.ibb.co.com/V0Kn0p8D/slider-1400.webp)",
+              backgroundRepeat: "no-repeat",
+              // objectFit: "cover",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }}
+          >
+            <div data-aos="fade-up" className="space-y-7">
+              <h1 className="font-extralight text-2xl lg:text-6xl">
+                Next Generation<br></br> Virtual Reality..
+              </h1>
+              <p className="font-extralight">
+                VR is the most quick access to notifications, calls, messages,{" "}
+                <br />
+                apps right on your wrist, reducing the constantly check.
+              </p>
+              <Link to={'/allProducts'}><button className="btn btn-outline border-[#FCAB35] text-[#FCAB35]">Shop Now</button></Link>
+            </div>
+          </div>
+        </SwiperSlide>
         <SwiperSlide>
           <div
             className="text-white lg:h-full h-72  content-center px-12 space-y-3 "
@@ -55,31 +80,7 @@ const Banner = () => {
            </div> */}
           </div>
         </SwiperSlide>
-        <SwiperSlide>
-          <div
-            className="text-white lg:h-full h-72  content-center px-12 space-y-3 "
-            style={{
-              backgroundImage:
-                "url(https://i.ibb.co.com/V0Kn0p8D/slider-1400.webp)",
-              backgroundRepeat: "no-repeat",
-              // objectFit: "cover",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-            }}
-          >
-            <div data-aos="fade-up" className="space-y-7">
-              <h1 className="font-extralight text-2xl lg:text-6xl">
-                Next Generation<br></br> Virtual Reality..
-              </h1>
-              <p className="font-extralight">
-                VR is the most quick access to notifications, calls, messages,{" "}
-                <br />
-                apps right on your wrist, reducing the constantly check.
-              </p>
-              <button className="btn btn-outline border-[#FCAB35] text-[#FCAB35]">Shop Now</button>
-            </div>
-          </div>
-        </SwiperSlide>
+        
       </Swiper>
     </div>
   );
