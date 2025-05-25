@@ -43,7 +43,11 @@ const Navbar = () => {
             } to={'/allProducts'}>All Products</NavLink>
             </li>
             <li>
-              <NavLink className="text-white px-4 py-2 hover:text-[#FCAB35] transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-[#FCAB35] after:w-0 hover:after:w-full after:transition-all after:duration-300">Contact Us</NavLink>
+              <NavLink className={({ isActive }) =>
+              isActive
+                ? " text-white font-semibold px-4 py-2 bg-[#FCAB35]"
+                : " text-white px-4 py-2 hover:text-[#FCAB35] transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-[#FCAB35] after:w-0 hover:after:w-full after:transition-all after:duration-300"
+            } to={'/contact'}>Contact Us</NavLink>
             </li>
           </ul>
         </div>
@@ -125,7 +129,7 @@ const Navbar = () => {
                   src={user ? user?.photoURL : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
                 />
               </div>
-            </div> : <Link to={'/login'}><button className="btn bg-[#FCAB35] border-0 ml-3 text-black rounded-sm">Login</button></Link>
+            </div> : <Link to={'/login'}><button className="btn md:text-base text-sm bg-[#FCAB35] border-0 ml-3 text-black rounded-sm">Login</button></Link>
           }
           <ul
             tabIndex={0}

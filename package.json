@@ -14,7 +14,7 @@
     "aos": "^2.3.4",
     "axios": "^1.9.0",
     "firebase": "^11.3.1",
-    "framer-motion": "^12.9.4",
+    "framer-motion": "^12.12.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",

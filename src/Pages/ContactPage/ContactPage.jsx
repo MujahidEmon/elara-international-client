@@ -41,7 +41,7 @@ const ContactPage = () => {
                 {/* Main Heading - Exact match to image */}
                 <h1 className="text-3xl font-bold text-left mb-8 text-[#FCAB35] underline">Contact Us</h1>
 
-                <div className="flex flex-col md:flex-row gap-12">
+                <div className="flex flex-col-reverse md:flex-row gap-12">
                     {/* Left Column - Contact Info */}
                     <div className="w-full md:w-1/2 space-y-6">
                         {/* Contact Information */}

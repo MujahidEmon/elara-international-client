@@ -25,7 +25,7 @@ const ProductCart = () => {
               <span className="ml-auto font-semibold">BDT {totalPrice}</span>
             </li>
             <li className="flex flex-wrap gap-4 text-sm">
-              Shipping <span className="ml-auto font-semibold">BDT 120</span>
+              Shipping <span className="ml-auto font-semibold">BDT 110</span>
             </li>
 
             <hr className="border-slate-300" />

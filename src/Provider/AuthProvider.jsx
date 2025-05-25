@@ -222,7 +222,7 @@ const AuthProvider = ({ children }) => {
     (sum, item) => sum + Number(item.price) * Number(item.quantity),
     0
   );
-  const grandTotal = totalPrice + 120;
+  const grandTotal = totalPrice + 110;
 
   // object to pass the element
   const AuthInfo = {

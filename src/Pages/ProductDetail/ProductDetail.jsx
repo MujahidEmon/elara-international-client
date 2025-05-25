@@ -41,7 +41,6 @@ const ProductDetail = () => {
                 {/* Price */}
                 <div className="mt-4 flex items-baseline gap-3">
                     <h3 className="text-2xl font-semibold text-base-content">{product.price} Taka</h3>
-                    <span className="text-sm text-gray-500">Tax included</span>
                 </div>
 
                 {/* Color Options */}
