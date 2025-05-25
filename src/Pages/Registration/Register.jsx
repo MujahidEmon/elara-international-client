@@ -49,7 +49,7 @@ const Register = () => {
             });
 
             // ✅ Sync local cart with DB
-            await axios.post("https://https://elara-international-server.onrender.com/products/cartProducts/bulk", {
+            await axios.post("https://elara-international-server.onrender.com/cartProducts/bulk", {
                 products,
                 email: res.user.email,
             });

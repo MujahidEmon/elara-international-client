@@ -7,9 +7,10 @@ import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import AllTrimmers from "../../Components/AllTrimmers/AllTrimmers";
 import Ratings from "../../Components/Ratings/Ratings";
+import { HashLoader } from "react-spinners";
 
 const Home = () => {
-  const {allProducts} = useContext(AuthContext) 
+  const { allProducts, loading } = useContext(AuthContext)
   console.log(allProducts);
 
   return (
@@ -38,7 +39,7 @@ const Home = () => {
       </motion.div>
 
       {/* 3 Banners Section */}
-        {/* <div data-aos="fade-up" className="max-w-screen-xl mx-auto flex flex-col lg:flex-row">
+      {/* <div data-aos="fade-up" className="max-w-screen-xl mx-auto flex flex-col lg:flex-row">
           {[
             "https://i.ibb.co.com/prhfZ1Cg/banner-image.webp",
             "https://i.ibb.co.com/rf3kprph/banner-image-2.webp",
@@ -120,19 +121,25 @@ const Home = () => {
             Electronics allProducts continue to drive innovation and shape the way we live, work, and interact with our environment.
           </p>
         </div>
+
+        {
+          loading ? <div className="min-h-screen flex items-center justify-center">
+            <HashLoader color="#FCAB35" size={60} />
+          </div>:
         <div className="md:flex grid grid-cols-2 md:flex-row flex-wrap px-4 md:px-0 md:gap-18 gap-2  mt-12">
-          {allProducts.slice(0,4).map((product, idx) => (
+          {allProducts.slice(0, 4).map((product, idx) => (
             <AllProductCard key={idx} product={product}></AllProductCard>
           ))}
         </div>
+       }
         <button className="btn btn-outline tracking-wider border-[#FCAB35] hover:bg-[#FCAB35] hover:text-white  hover:scale-110 text-[#FCAB35]"><Link to={'/allProducts'}>View All</Link></button>
       </div>
 
 
       {/* Best Trimmer Section */}
-        <div className="my-14 lg:my-32 px-4 max-w-screen-xl mx-auto">
-          <AllTrimmers></AllTrimmers>
-        </div>
+      <div className="my-14 lg:my-32 px-4 max-w-screen-xl mx-auto">
+        <AllTrimmers></AllTrimmers>
+      </div>
 
 
 
