@@ -9,7 +9,7 @@ const AllProductCard = ({ product }) => {
   return (
     <div className="group relative  bg-base rounded-sm md:w-64 w-40 overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col">
       {/* Image with hover zoom and gradient overlay */}
-      <div className="relative overflow-hidden md:h-60 h-40">
+      <Link to={`/products/${product._id}`}className="relative overflow-hidden md:h-60 h-40">
         <img
           src={product.image}
           alt={product.productName}
@@ -28,15 +28,15 @@ const AllProductCard = ({ product }) => {
             <path d="M45.5 4A18.53 18.53 0 0 0 32 9.86 18.5 18.5 0 0 0 0 22.5C0 40.92 29.71 59 31 59.71a2 2 0 0 0 2.06 0C34.29 59 64 40.92 64 22.5A18.52 18.52 0 0 0 45.5 4ZM32 55.64C26.83 52.34 4 36.92 4 22.5a14.5 14.5 0 0 1 26.36-8.33 2 2 0 0 0 3.27 0A14.5 14.5 0 0 1 60 22.5c0 14.41-22.83 29.83-28 33.14Z" />
           </svg>
         </div>
-      </div>
+      </Link>
 
       {/* Product Info */}
-      <div className="py-2 text-center space-y-2 flex-grow">
+      <Link to={`/products/${product._id}`} className="py-2 text-center space-y-2 flex-grow">
         <h3 className="md:text-xl text-sm font-bold text-base-400 line-clamp-2">
           <Link to={`/products/${product._id}`}>{product.productName}</Link>
         </h3>
         <p className="text-base-400 text-sm">{product.price} Taka</p>
-      </div>
+      </Link>
 
       {/* Add to Cart Button */}
       <div className="p-4 pt-0">

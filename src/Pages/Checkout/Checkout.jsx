@@ -205,7 +205,7 @@ const Checkout = () => {
                     <div className="sm:col-span-2">
                       <button
                         type="submit"
-                        className="w-full flex items-center justify-center gap-3 rounded-lg bg-indigo-600 px-6 py-3 text-white text-lg font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition"
+                        className="w-full flex items-center justify-center gap-3 rounded-lg bg-[#FCAB35] px-6 py-3 text-white text-lg font-semibold hover:bg-[#fcac35dd] focus:outline-none focus:ring-4  transition"
                       >
                         <GiConfirmed size={22} />
                         Place Order
@@ -250,7 +250,7 @@ const Checkout = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>Shipping</span>
-                    <span>BDT 50</span>
+                    <span>BDT 110</span>
                   </div>
                 </div>
 
