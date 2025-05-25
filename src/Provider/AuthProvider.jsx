@@ -25,22 +25,24 @@ export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [allProducts, setAllProducts] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
   const googleProvider = new GoogleAuthProvider();
-  const productUrl = 'http://localhost:5000/products';
-  const cartProductUrl = 'http://localhost:5000/cartProducts';
+  const productUrl = 'https://https://elara-international-server.onrender.com/products/products';
+  const cartProductUrl = 'https://https://elara-international-server.onrender.com/products/cartProducts';
 
 
   //   function for firebase login
   const login = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
 
   // function for firebase register
   const register = (email, password, name, photo) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
@@ -53,6 +55,7 @@ const AuthProvider = ({ children }) => {
 
   // function for logout
   const logout = () => {
+    setLoading(true)
     return signOut(auth);
   };
 
@@ -61,7 +64,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      // setLoading(false)
+      setLoading(false)
     });
 
     return () => unSubscribe();
@@ -73,14 +76,18 @@ const AuthProvider = ({ children }) => {
     fetch(productUrl)
       .then(res => res.json())
       .then(data => {
+        setLoading(true)
         setAllProducts(data)
+        setLoading(false);
       })
   }, [productUrl])
   useEffect(() => {
     fetch(cartProductUrl)
       .then(res => res.json())
       .then(data => {
-        setCartProducts(data)
+        setLoading(true);
+        setCartProducts(data);
+        setLoading(false);
       })
   }, [cartProductUrl])
 
@@ -89,7 +96,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       // Logged-in user => fetch from DB
-      axios.get(`http://localhost:5000/cartProducts/${user.email}`)
+      axios.get(`https://https://elara-international-server.onrender.com/products/cartProducts/${user.email}`)
         .then(res => setCartProducts(res.data))
         .catch(err => console.log(err));
     } else {
@@ -103,7 +110,7 @@ const AuthProvider = ({ children }) => {
   // function for add to cart and stored in local storage
   const handleAddToCart = (product) => {
     if (user && user.email) {
-      fetch('http://localhost:5000/cartProducts/bulk', {
+      fetch('https://https://elara-international-server.onrender.com/products/cartProducts/bulk', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -126,7 +133,7 @@ const AuthProvider = ({ children }) => {
           toast.success("Added to cart");
 
           // **Fetch updated cart data from backend and update state**
-          const res2 = await fetch(`http://localhost:5000/cartProducts/${user.email}`);
+          const res2 = await fetch(`https://https://elara-international-server.onrender.com/products/cartProducts/${user.email}`);
           const updatedCart = await res2.json();
           setCartProducts(updatedCart);  // Live update here
         })
@@ -146,12 +153,12 @@ const AuthProvider = ({ children }) => {
 
   const handleRemoveFromCart = (_id) => {
     if (user) {
-      fetch(`http://localhost:5000/cartProducts/${_id}`, {
+      fetch(`https://https://elara-international-server.onrender.com/products/cartProducts/${_id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
         .then(() => {
-          axios.get(`http://localhost:5000/cartProducts/${user.email}`)
+          axios.get(`https://https://elara-international-server.onrender.com/products/cartProducts/${user.email}`)
             .then(res => setCartProducts(res.data));
         });
     } else {
@@ -163,12 +170,12 @@ const AuthProvider = ({ children }) => {
 
   const handleIncrease = (product) => {
     if (user) {
-      fetch(`http://localhost:5000/cartProducts/increase/${product._id}`, {
+      fetch(`https://https://elara-international-server.onrender.com/products/cartProducts/increase/${product._id}`, {
         method: "PATCH",
       })
         .then((res) => res.json())
         .then(() => {
-          axios.get(`http://localhost:5000/cartProducts/${user.email}`)
+          axios.get(`https://https://elara-international-server.onrender.com/products/cartProducts/${user.email}`)
             .then(res => setCartProducts(res.data))
             .catch(err => console.log(err));
         });
@@ -180,12 +187,12 @@ const AuthProvider = ({ children }) => {
 
   const handleDecrease = (product) => {
     if (user) {
-      fetch(`http://localhost:5000/cartProducts/decrease/${product._id}`, {
+      fetch(`https://https://elara-international-server.onrender.com/products/cartProducts/decrease/${product._id}`, {
         method: "PATCH",
       })
         .then((res) => res.json())
         .then(() => {
-          axios.get(`http://localhost:5000/cartProducts/${user.email}`)
+          axios.get(`https://https://elara-international-server.onrender.com/products/cartProducts/${user.email}`)
             .then(res => setCartProducts(res.data))
             .catch(err => console.log(err));
         });

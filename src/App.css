@@ -8,8 +8,12 @@
     --font-fredoka: "Fredoka", "sans-serif";
 }
 
-.swiper {
+.swiper-banner {
     width: 100%;
-    height: 650px;
+    height: calc(100vh - 66px);
     object-fit: cover;
   }
+
+  
+
+  

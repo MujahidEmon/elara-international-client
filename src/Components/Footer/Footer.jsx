@@ -4,7 +4,7 @@ const Footer = () => {
     return (
         <footer className="bg-gray-900 pt-12 pb-6 px-10 tracking-wide">
             <div className="max-w-screen-xl mx-auto">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols- sm:grid-cols-2 lg:grid-cols-4 gap-8 ">
                     <div className="lg:flex lg:items-center">
                         <a href="#">
                             <img
@@ -106,11 +106,7 @@ const Footer = () => {
                                     Sale
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" className="text-gray-400 hover:text-white text-sm">
-                                    Documentation
-                                </a>
-                            </li>
+
                         </ul>
                     </div>
                 </div>

@@ -7,7 +7,7 @@ import axios from 'axios';
 import { getCartProducts } from '../../Utils/LocalStroage';
 
 const Login = () => {
-    const { login } = useContext(AuthContext);
+    const { login , GoogleSignin} = useContext(AuthContext);
     const navigate = useNavigate();
     const [showPass, setShowPass] = useState(false);
 
@@ -35,7 +35,7 @@ const Login = () => {
                         productId: p._id || p.productId || p.id,
                     }));
 
-                    await axios.post('http://localhost:5000/cartProducts/bulk', {
+                    await axios.post('https://https://elara-international-server.onrender.com/products/cartProducts/bulk', {
                         email: user.email,
                         products: formattedProducts,
                     });
@@ -66,8 +66,57 @@ const Login = () => {
     };
 
 
+    const handleGoogleLogin = async () => {
+        try {
+            // Call your login function
+            const res = await GoogleSignin();
+            const user = res.user;
+
+            // Fetch local cart products synchronously from localStorage or your store
+            const products = getCartProducts(); // Assuming this returns array of product objects
+
+            // Only send to backend if products array exists and has length > 0
+            if (products && products.length > 0) {
+                try {
+                    // Make sure each product has _id or productId (needed by backend)
+                    const formattedProducts = products.map((p) => ({
+                        ...p,
+                        // Ensure productId field exists for backend to process correctly
+                        productId: p._id || p.productId || p.id,
+                    }));
+
+                    await axios.post('https://https://elara-international-server.onrender.com/products/cartProducts/bulk', {
+                        email: user.email,
+                        products: formattedProducts,
+                    });
+
+                    // Remove local cart only if server sync is successful
+                    localStorage.removeItem('cartProducts');
+                    console.log("Products synced with server");
+                } catch (syncError) {
+                    console.error("Failed to sync cart products with server:", syncError);
+                    // Optional: Show error to user or keep local cart intact for retry
+                }
+            }
+
+            Swal.fire({
+                icon: "success",
+                title: "Logged in",
+            });
+
+            navigate('/');
+        } catch (error) {
+            console.error("Login failed:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Login Failed",
+                text: error.message || "Something went wrong",
+            });
+        }
+    }
+
     return (
-        <div className="flex  w-full mb-12 md:rounded-xl rounded-lg lg:max-w-xl max-w-sm bg-accent mx-auto font-raleway justify-center">
+        <div className="flex  w-full my-12 md:rounded-xl rounded-lg lg:max-w-xl max-w-sm bg-accent mx-auto font-raleway justify-center">
             <form onSubmit={handleLogin} className="max-w-lg w-full px-6 py-8 mx-auto">
                 <div className="mb-6">
                     <h3 className="text-base-400 font-rancho text-center text-4xl font-bold">
@@ -147,14 +196,12 @@ const Login = () => {
                     <hr className="w-full border-gray-300" />
                 </div>
 
-                <div className="flex items-center gap-6 justify-center">
-                    <button className="btn btn-circle">
+                {/* <div className="flex items-center gap-6 justify-center">
+                    <button onClick={handleGoogleLogin} className="btn btn-circle">
                         <FaGoogle size={30} />
                     </button>
-                    <button className="btn btn-circle">
-                        <FaGithub size={30} />
-                    </button>
-                </div>
+                    
+                </div> */}
             </form>
         </div>
     );

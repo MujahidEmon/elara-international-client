@@ -7,48 +7,71 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import axios from "axios";
 import { getCartProducts } from "../../Utils/LocalStroage";
 import Swal from "sweetalert2";
+import { FaImage } from "react-icons/fa";
+import { CgNametag } from "react-icons/cg";
 
 const Register = () => {
     const navigate = useNavigate();
     const { register } = useContext(AuthContext)
     const products = getCartProducts()
     const [showPass, setShowPass] = useState(false)
-    const handleRegister = e => {
-        e.preventDefault();
-        const form = new FormData(e.currentTarget)
-        const name = form.get('name');
-        const photo = form.get('photo');
-        const email = form.get('email');
-        const password = form.get('password');
-        console.log(name, photo, email, password);
 
-        register(email, password)
-            .then(res => {
-                console.log(res.user)
-                updateProfile(auth.currentUser, {
-                    displayName: name, photoURL: photo
-                })
-                axios.post('http://localhost:5000/cartProducts/bulk', {
-                    products: products,
-                    email: res.user.email
-                })
-                    .then(function (response) {
-                        console.log(response);
-                        localStorage.removeItem('cartProducts');
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-                Swal.fire({
-                    icon: "success",
-                    title: "Logged in",
-                    footer: `${navigate('/')}`
-                });
-            })
-            .catch(error => {
-                console.error(error);
-            })
-    }
+    
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        const form = new FormData(e.currentTarget);
+        const name = form.get("name");
+        const imageFile = form.get("image");
+        const email = form.get("email");
+        const password = form.get("password");
+
+        const imgbbApiKey = "53db74273f733d00facae7fe86d074d0"; // Replace with your actual key
+        const imageData = new FormData();
+        imageData.append("image", imageFile);
+
+        try {
+            // ✅ Upload image to imgbb
+            const imgbbRes = await axios.post(
+                `https://api.imgbb.com/1/upload?key=${imgbbApiKey}`,
+                imageData
+            );
+
+            const imageUrl = imgbbRes.data.data.url;
+
+            // ✅ Register user
+            const res = await register(email, password);
+            console.log(res.user);
+
+            // ✅ Update profile
+            await updateProfile(auth.currentUser, {
+                displayName: name,
+                photoURL: imageUrl,
+            });
+
+            // ✅ Sync local cart with DB
+            await axios.post("https://https://elara-international-server.onrender.com/products/cartProducts/bulk", {
+                products,
+                email: res.user.email,
+            });
+
+            localStorage.removeItem("cartProducts");
+
+            Swal.fire({
+                icon: "success",
+                title: "Registered Successfully",
+            });
+
+            navigate("/");
+        } catch (error) {
+            console.error("Registration Error:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Something went wrong",
+                text: error.message || "Please try again later.",
+            });
+        }
+    };
+
 
     return (
         <div className="flex lg:w-2/3 w-full rounded-xl my-8 lg:max-w-xl max-w-sm bg-accent  mx-auto  font-raleway justify-center ">
@@ -76,35 +99,7 @@ const Register = () => {
                                 placeholder="Enter Your Name"
                             // {...register("email", { required: true })}
                             />
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="#bbb"
-                                stroke="#bbb"
-                                className="w-[18px] h-[18px] absolute right-2"
-                                viewBox="0 0 682.667 682.667"
-                            >
-                                <defs>
-                                    <clipPath id="a" clipPathUnits="userSpaceOnUse">
-                                        <path d="M0 512h512V0H0Z" data-original="#000000"></path>
-                                    </clipPath>
-                                </defs>
-                                <g
-                                    clipPath="url(#a)"
-                                    transform="matrix(1.33 0 0 -1.33 0 682.667)"
-                                >
-                                    <path
-                                        fill="none"
-                                        strokeMiterlimit="10"
-                                        strokeWidth="40"
-                                        d="M452 444H60c-22.091 0-40-17.909-40-40v-39.446l212.127-157.782c14.17-10.54 33.576-10.54 47.746 0L492 364.554V404c0 22.091-17.909 40-40 40Z"
-                                        data-original="#000000"
-                                    ></path>
-                                    <path
-                                        d="M472 274.9V107.999c0-11.027-8.972-20-20-20H60c-11.028 0-20 8.973-20 20V274.9L0 304.652V107.999c0-33.084 26.916-60 60-60h392c33.084 0 60 26.916 60 60v196.653Z"
-                                        data-original="#000000"
-                                    ></path>
-                                </g>
-                            </svg>
+                            <div className="w-[18px] h-[18px] absolute right-2"><CgNametag></CgNametag></div>
                         </div>
                         {/* {errors.email && (
                     <span className="text-primary text-xs font-medium">
@@ -118,42 +113,15 @@ const Register = () => {
                         </label>
                         <div className="relative flex items-center">
                             <input
-                                name="photo"
-                                type="text"
+                                type="file"
+                                name="image"
+                                accept="image/*"
                                 // required
                                 className="w-full text-sm text-base-content border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
                                 placeholder="Give Your Photo URL"
                             // {...register("email", { required: true })}
                             />
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="#bbb"
-                                stroke="#bbb"
-                                className="w-[18px] h-[18px] absolute right-2"
-                                viewBox="0 0 682.667 682.667"
-                            >
-                                <defs>
-                                    <clipPath id="a" clipPathUnits="userSpaceOnUse">
-                                        <path d="M0 512h512V0H0Z" data-original="#000000"></path>
-                                    </clipPath>
-                                </defs>
-                                <g
-                                    clipPath="url(#a)"
-                                    transform="matrix(1.33 0 0 -1.33 0 682.667)"
-                                >
-                                    <path
-                                        fill="none"
-                                        strokeMiterlimit="10"
-                                        strokeWidth="40"
-                                        d="M452 444H60c-22.091 0-40-17.909-40-40v-39.446l212.127-157.782c14.17-10.54 33.576-10.54 47.746 0L492 364.554V404c0 22.091-17.909 40-40 40Z"
-                                        data-original="#000000"
-                                    ></path>
-                                    <path
-                                        d="M472 274.9V107.999c0-11.027-8.972-20-20-20H60c-11.028 0-20 8.973-20 20V274.9L0 304.652V107.999c0-33.084 26.916-60 60-60h392c33.084 0 60 26.916 60 60v196.653Z"
-                                        data-original="#000000"
-                                    ></path>
-                                </g>
-                            </svg>
+                            <div className="w-[18px] h-[18px] absolute right-2"><FaImage></FaImage></div>
                         </div>
                         {/* {errors.email && (
                     <span className="text-primary text-xs font-medium">

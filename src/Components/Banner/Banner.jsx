@@ -7,6 +7,7 @@ import "aos/dist/aos.css";
 // import { Navigation } from "swiper/modules";
 import { useEffect } from "react";
 import AOS from "aos";
+import { Link } from "react-router-dom";
 const Banner = () => {
   useEffect(() => {
     AOS.init({
@@ -23,10 +24,35 @@ const Banner = () => {
         effect="fade"
         fadeEffect={{ crossFade: true }}
         modules={[Navigation, EffectFade]}
-        className="mySwiper"
+        className="swiper-banner"
         onSlideChange={() => {
           AOS.refresh(); // 👈 Trigger AOS to re-animate
         }}>
+          <SwiperSlide>
+          <div
+            className="text-white lg:h-full h-72   content-center px-12 space-y-3 "
+            style={{
+              backgroundImage:
+                "url(https://i.ibb.co.com/V0Kn0p8D/slider-1400.webp)",
+              backgroundRepeat: "no-repeat",
+              // objectFit: "cover",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }}
+          >
+            <div data-aos="fade-up" className="space-y-7">
+              <h1 className="font-extralight text-2xl lg:text-6xl">
+                Next Generation<br></br> Virtual Reality..
+              </h1>
+              <p className="text-xs md:text-lg  font-extralight ">
+                VR is the most quick access to notifications, calls, messages,{" "}
+                <br />
+                apps right on your wrist, reducing the constantly check.
+              </p>
+              <Link to={'/allProducts'}><button className="btn btn-outline border-[#FCAB35] text-[#FCAB35]">Shop Now</button></Link>
+            </div>
+          </div>
+        </SwiperSlide>
         <SwiperSlide>
           <div
             className="text-white lg:h-full h-72  content-center px-12 space-y-3 "
@@ -42,43 +68,19 @@ const Banner = () => {
               <h1 className="font-extralight tracking-tight text-2xl lg:text-5xl">
                 Grab the best deal on<br></br> <span className="font-semibold tracking-widest uppercase">Smartwatches</span>
               </h1>
-              <p className="font-extralight">
+              <p className="ext-xs md:text-lg  font-extralight">
                 Smartwatches provide quick access to notifications, calls,
                 messages, and <br />
                 apps right on your wrist, reducing the constantly check your
                 phone.
               </p>
-              <button className="btn btn-outline border-[#FCAB35] text-[#FCAB35]">Shop Now</button>
+              <Link to={'/allProducts'}><button className="btn btn-outline border-[#FCAB35] text-[#FCAB35]">Shop Now</button></Link>
             </div>
             {/* <div className="lg:max-w-7xl mx-auto w-fit  flex flex-col  ">
            </div> */}
           </div>
         </SwiperSlide>
-        <SwiperSlide>
-          <div
-            className="text-white lg:h-full h-72  content-center px-12 space-y-3 "
-            style={{
-              backgroundImage:
-                "url(https://i.ibb.co.com/V0Kn0p8D/slider-1400.webp)",
-              backgroundRepeat: "no-repeat",
-              // objectFit: "cover",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-            }}
-          >
-            <div data-aos="fade-up" className="space-y-7">
-              <h1 className="font-extralight text-2xl lg:text-6xl">
-                Next Generation<br></br> Virtual Reality..
-              </h1>
-              <p className="font-extralight">
-                VR is the most quick access to notifications, calls, messages,{" "}
-                <br />
-                apps right on your wrist, reducing the constantly check.
-              </p>
-              <button className="btn btn-outline border-[#FCAB35] text-[#FCAB35]">Shop Now</button>
-            </div>
-          </div>
-        </SwiperSlide>
+        
       </Swiper>
     </div>
   );
