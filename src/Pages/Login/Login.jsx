@@ -35,7 +35,7 @@ const Login = () => {
                         productId: p._id || p.productId || p.id,
                     }));
 
-                    await axios.post('https://elara-international-server.onrender.com/cartProducts/bulk', {
+                    await axios.post('https://https://elara-international-server.onrender.com/products/cartProducts/bulk', {
                         email: user.email,
                         products: formattedProducts,
                     });
@@ -85,7 +85,7 @@ const Login = () => {
                         productId: p._id || p.productId || p.id,
                     }));
 
-                    await axios.post('https://elara-international-server.onrender.com/cartProducts/bulk', {
+                    await axios.post('https://https://elara-international-server.onrender.com/products/cartProducts/bulk', {
                         email: user.email,
                         products: formattedProducts,
                     });

@@ -1,18 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AllProductCard from "../../Components/AllProductCard/AllProductCard";
 import axios from "axios";
 import { FiFilter } from "react-icons/fi";
+import { AuthContext } from "../../Provider/AuthProvider";
+import { HashLoader } from "react-spinners";
 
 const AllProducts = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [products, setProducts] = useState([]);
+  const {loading, setLoading} = useContext(AuthContext);
 
   // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("https://elara-international-server.onrender.com/categories");
+        const res = await axios.get("https://https://elara-international-server.onrender.com/products/categories");
         setCategories(res.data);
       } catch (error) {
         console.error("Failed to fetch categories", error);
@@ -27,11 +30,13 @@ const AllProducts = () => {
     const fetchProducts = async () => {
       try {
         const url = selectedCategory
-          ? `https://elara-international-server.onrender.com/products?category=${selectedCategory}`
-          : "https://elara-international-server.onrender.com/products";
+          ? `https://https://elara-international-server.onrender.com/products/products?category=${selectedCategory}`
+          : "https://https://elara-international-server.onrender.com/products/products";
 
         const res = await axios.get(url);
+        // setLoading(true);
         setProducts(res.data);
+        // setLoading(false)
       } catch (error) {
         console.error("Failed to fetch products", error);
       }
@@ -40,7 +45,12 @@ const AllProducts = () => {
     fetchProducts();
   }, [selectedCategory]);
 
-  return (
+  if(loading){
+    return <div className="min-h-screen"><HashLoader></HashLoader></div>
+  }
+  else
+  {
+    return (
     <div className="mx-auto px-6 lg:max-w-7xl max-w-lg my-12 md:max-w-4xl">
       <div className="flex flex-row items-center justify-between">
         <h2 className="text-2xl sm:text-3xl font-bold text-base-400 my-6 sm:mb-8">
@@ -98,6 +108,7 @@ const AllProducts = () => {
       </div>
     </div>
   );
+  }
 };
 
 export default AllProducts;

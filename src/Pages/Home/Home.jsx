@@ -22,7 +22,7 @@ const Home = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
-        className="h-screen flex items-center justify-center text-white px-4 md:px-6"
+        className="h-screen md:flex hidden items-center justify-center text-white px-4 md:px-6"
         style={{
           backgroundImage: "url('https://i.ibb.co/sJW0vqdQ/banner-image-4.webp')",
           backgroundSize: "cover",

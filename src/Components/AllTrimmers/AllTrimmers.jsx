@@ -8,7 +8,7 @@ const AllTrimmers = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`https://elara-international-server.onrender.com/products?category=Trimmer`);
+                const res = await axios.get(`https://https://elara-international-server.onrender.com/products/products?category=Trimmer`);
                 setTrimmers(res.data);
             } catch (err) {
                 console.error("Failed to fetch trimmers:", err);
