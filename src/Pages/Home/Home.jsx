@@ -125,13 +125,16 @@ const Home = () => {
         {
           loading ? <div className="min-h-screen flex items-center justify-center">
             <HashLoader color="#FCAB35" size={60} />
-          </div>:
-        <div className="md:flex grid grid-cols-2 md:flex-row flex-wrap px-4 md:px-0 md:gap-18 gap-2  mt-12">
-          {allProducts.slice(0, 4).map((product, idx) => (
-            <AllProductCard key={idx} product={product}></AllProductCard>
-          ))}
-        </div>
-       }
+          </div> :
+            <div className="md:flex grid grid-cols-2 md:flex-row flex-wrap px-4 md:px-0 md:gap-18 gap-2  mt-12">
+              {[...allProducts]
+                .reverse() 
+                .slice(0, 8)
+                .map((product, idx) => (
+                  <AllProductCard key={product._id} product={product} />
+                ))}
+            </div>
+        }
         <button className="btn btn-outline tracking-wider border-[#FCAB35] hover:bg-[#FCAB35] hover:text-white  hover:scale-110 text-[#FCAB35]"><Link to={'/allProducts'}>View All</Link></button>
       </div>
 
