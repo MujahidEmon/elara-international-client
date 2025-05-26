@@ -115,51 +115,72 @@ const AuthProvider = ({ children }) => {
   }, [user]);
 
   // function for add to cart and stored in local storage or server
-  const handleAddToCart = (product) => {
-    if (user && user.email) {
-      setLoading(true);  // <-- loading start when adding to cart on server
-      fetch('https://elara-international-server.onrender.com/cartProducts/bulk', {
+ const handleAddToCart = async (product) => {
+  if (user && user.email) {
+    try {
+      // Create optimistic product object
+      const optimisticProduct = {
+        _id: product._id || product.id,
+        productName: product.name || product.productName,
+        price: product.price,
+        image: product.photo || product.image,
+        quantity: 1,
+        // Add any other necessary fields
+      };
+
+      // 1. Optimistically update local state immediately
+      setCartProducts(prev => [...prev, optimisticProduct]);
+      
+      // 2. Show toast immediately
+      toast.success("Adding to cart...");
+
+      // 3. Send to server
+      const response = await fetch('https://elara-international-server.onrender.com/cartProducts/bulk', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email: user.email,
-          products: [
-            {
-              productId: product._id || product.id,
-              name: product.name,
-              price: product.price,
-              photo: product.photo,
-              quantity: 1,
-            },
-          ],
+          products: [{
+            productId: product._id || product.id,
+            name: product.name || product.productName,
+            price: product.price,
+            photo: product.photo || product.image,
+            quantity: 1,
+          }],
         }),
-      })
-        .then(res => res.json())
-        .then(async (data) => {
-          toast.success("Added to cart");
+      });
 
-          // Fetch updated cart data from backend and update state
-          const res2 = await fetch(`https://elara-international-server.onrender.com/cartProducts/${user.email}`);
-          const updatedCart = await res2.json();
-          setCartProducts(updatedCart);  // Live update here
-        })
-        .catch(err => {
-          console.error("Error adding to server cart:", err);
-        })
-        .finally(() => setLoading(false));  // <-- loading ends here after add to cart
-    } else {
-      saveToCart(product);
-      const products = getCartProducts();
-      setCartProducts(products);
+      if (!response.ok) throw new Error('Failed to add to cart');
+
+      // 4. Verify with server (optional - only if you need absolute consistency)
+      const updatedCart = await fetch(`https://elara-international-server.onrender.com/cartProducts/${user.email}`)
+        .then(res => res.json());
+      
+      // 5. Update with server response
+      setCartProducts(updatedCart);
+      toast.success("Added to cart successfully!");
+
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      // Rollback on error
+      setCartProducts(prev => prev.filter(p => p._id !== (product._id || product.id)));
+      toast.error("Failed to add to cart");
     }
-  };
+  } else {
+    // Guest user handling
+    saveToCart(product);
+    const products = getCartProducts();
+    setCartProducts(products);
+    // toast.success("Added to cart");
+  }
+};
 
   // remove cart products and also from local storage
   const handleRemoveFromCart = (_id) => {
     if (user) {
-      setLoading(true);  // <-- loading start when removing from server cart
+      // setLoading(true);  // <-- loading start when removing from server cart
       fetch(`https://elara-international-server.onrender.com/cartProducts/${_id}`, {
         method: "DELETE",
       })

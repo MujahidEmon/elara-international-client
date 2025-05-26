@@ -16,7 +16,7 @@ const AllProductCard = ({ product }) => {
     setShowCartSlider(true);
 
     // Auto-hide after 8 seconds
-    setTimeout(() => setShowCartSlider(false), 38000);
+    setTimeout(() => setShowCartSlider(false), 10000);
   };
 
   return (
