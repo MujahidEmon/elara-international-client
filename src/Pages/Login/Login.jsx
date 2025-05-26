@@ -35,7 +35,7 @@ const Login = () => {
                         productId: p._id || p.productId || p.id,
                     }));
 
-                    await axios.post('https://https://elara-international-server.onrender.com/products/cartProducts/bulk', {
+                    await axios.post('https://elara-international-server.onrender.com/cartProducts/bulk', {
                         email: user.email,
                         products: formattedProducts,
                     });
@@ -85,7 +85,7 @@ const Login = () => {
                         productId: p._id || p.productId || p.id,
                     }));
 
-                    await axios.post('https://https://elara-international-server.onrender.com/products/cartProducts/bulk', {
+                    await axios.post('https://elara-international-server.onrender.com/cartProducts/bulk', {
                         email: user.email,
                         products: formattedProducts,
                     });
@@ -190,11 +190,11 @@ const Login = () => {
                     </p>
                 </div>
 
-                <div className="my-4 flex items-center gap-4">
+                {/* <div className="my-4 flex items-center gap-4">
                     <hr className="w-full border-gray-300" />
                     <p className="text-sm text-base-400 text-center">or</p>
                     <hr className="w-full border-gray-300" />
-                </div>
+                </div> */}
 
                 {/* <div className="flex items-center gap-6 justify-center">
                     <button onClick={handleGoogleLogin} className="btn btn-circle">

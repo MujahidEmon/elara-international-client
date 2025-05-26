@@ -15,6 +15,8 @@ import AllProducts from './Pages/AllProducts/AllProducts.jsx'
 import { Toaster } from 'react-hot-toast'
 import Checkout from './Pages/Checkout/Checkout.jsx'
 import ProductDetail from './Pages/ProductDetail/ProductDetail.jsx'
+import ContactPage from './Pages/ContactPage/ContactPage.jsx'
+import TermsAndConditions from './Pages/TermsAndCon/TermsAndConditions.jsx'
 
 // routing section
 const router = createBrowserRouter([
@@ -25,7 +27,7 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home></Home>,
-        loader: ({params}) => fetch('https://https://elara-international-server.onrender.com/products/products')
+        loader: ({params}) => fetch('https://elara-international-server.onrender.com/products')
       },
       {
         path:'/cart',
@@ -54,7 +56,15 @@ const router = createBrowserRouter([
       {
         path: '/products/:id',
         element: <ProductDetail></ProductDetail>,
-        loader: ({params}) => fetch(`https://https://elara-international-server.onrender.com/products/products/${params.id}`)
+        loader: ({params}) => fetch(`https://elara-international-server.onrender.com/products/${params.id}`)
+      },
+      {
+        path:'/contact',
+        element: <ContactPage></ContactPage>
+      },
+      {
+        path: '/TermsAndConditions',
+        element: <TermsAndConditions></TermsAndConditions>
       }
       
     ]

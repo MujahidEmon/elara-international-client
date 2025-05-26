@@ -1,15 +1,18 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import AllProductCard from "../AllProductCard/AllProductCard";
+import { HashLoader, PropagateLoader } from "react-spinners";
 
 const AllTrimmers = () => {
     const [trimmers, setTrimmers] = useState([]);
-    
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`https://https://elara-international-server.onrender.com/products/products?category=Trimmer`);
+                setLoading(true)
+                const res = await axios.get(`https://elara-international-server.onrender.com/products?category=Trimmer`);
                 setTrimmers(res.data);
+                setLoading(false)
             } catch (err) {
                 console.error("Failed to fetch trimmers:", err);
             }
@@ -30,9 +33,14 @@ const AllTrimmers = () => {
             </div>
 
             {/* Example: Display trimmer names */}
-            <div className="md:flex grid grid-cols-2 md:flex-row flex-wrap px-4 md:px-0 md:gap-18 gap-2  mt-12">
+            {
+                loading ? <div className="min-h-screen flex items-center justify-center">
+                    <PropagateLoader color="#FCAB35" size={20} />
+                </div> :
+                <div className="md:flex grid grid-cols-2 md:flex-row flex-wrap px-4 md:px-0 md:gap-18 gap-2  mt-12">
                 {trimmers.map((item, index) => <AllProductCard product={item} key={index}></AllProductCard>)}
             </div>
+            }
         </div>
     );
 };
