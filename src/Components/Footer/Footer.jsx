@@ -12,7 +12,7 @@ const Footer = () => {
                             <img
                                 src={elogo}
                                 alt="Elara International"
-                                className="w-40 h-auto transition-opacity hover:opacity-90"
+                                className="h-40 transition-opacity hover:opacity-90"
                             />
                         </Link>
                         <p className="text-gray-400 text-sm leading-relaxed">

@@ -1,24 +1,22 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import axios from "axios";
+import useCartProducts from "../../Hooks/useCartProducts";
 
 const Navbar = () => {
 
-  // importing logout function
-  const { logout, user, cartProducts, totalPrice } = useContext(AuthContext);
-  // const products = getCartProducts()
-  // console.log(user.photoURL);
-  const handleLogout = () => {
+  const {cartProducts, totalCartPrice} = useCartProducts();
+  const { logout, user} = useContext(AuthContext);
+ 
+  const handleLogout =async () => {
     logout()
-      .then(
-
-    )
-      .catch(error => console.error(error)
-      )
+    const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {withCredentials: true});
+    console.log(data);
   }
 
   return (
-    <div className="navbar sticky top-0 z-50 backdrop-blur-md bg-white/20 shadow-md">
+    <div className="navbar sticky top-0 z-50 backdrop-blur-md bg-black/70 shadow-md">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -51,7 +49,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <Link to={'/'} className="btn bg-transparent border-0 ml-0 pl-0 md:pl-auto md:text-xl text-base"><span className="text-[#FCAB35]">Elara</span> International</Link>
+        <Link to={'/'} className=" bg-transparent border-0 ml-0 pl-0 md:pl-auto md:text-2xl text-white font-semibold"><span className="text-[#FCAB35]">Elara</span> International</Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul
@@ -109,7 +107,7 @@ const Navbar = () => {
           >
             <div className="card-body">
               <span className="text-lg text-[#FCAB35] font-bold">{cartProducts.length} Items</span>
-              <span className="text-[#FCAB35]">Subtotal: BDT {totalPrice}</span>
+              <span className="text-[#FCAB35]">Subtotal: BDT {totalCartPrice}</span>
               <div className="card-actions">
                 <Link to={'/cart'} className="btn border-[#FCAB35] text-[#FCAB35] btn-outline">View cart</Link>
               </div>
@@ -129,7 +127,7 @@ const Navbar = () => {
                   src={user ? user?.photoURL : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
                 />
               </div>
-            </div> : <Link to={'/login'}><button className="btn md:text-base text-sm bg-[#FCAB35] border-0 ml-3 text-black rounded-sm">Login</button></Link>
+            </div> : <Link to={'/login'}><button className="btn shadow-none md:text-base text-sm bg-[#FCAB35] border-0 ml-3 text-black rounded-sm">Login</button></Link>
           }
           <ul
             tabIndex={0}

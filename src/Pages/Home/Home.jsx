@@ -1,17 +1,14 @@
 import Banner from "../../Components/Banner/Banner";
-import ProductCard from "../../Components/ProductCard/ProductCard";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import AllProductCard from "../../Components/AllProductCard/AllProductCard";
-import { useContext } from "react";
-import { AuthContext } from "../../Provider/AuthProvider";
 import AllTrimmers from "../../Components/AllTrimmers/AllTrimmers";
 import Ratings from "../../Components/Ratings/Ratings";
 import { HashLoader } from "react-spinners";
+import useAllProducts from "../../Hooks/useAllProducts";
 
 const Home = () => {
-  const { allProducts, loading } = useContext(AuthContext)
-  console.log(allProducts);
+  const { allProducts, isLoading: loading } = useAllProducts()
 
   return (
     <div>
@@ -38,80 +35,7 @@ const Home = () => {
         </div>
       </motion.div>
 
-      {/* 3 Banners Section */}
-      {/* <div data-aos="fade-up" className="max-w-screen-xl mx-auto flex flex-col lg:flex-row">
-          {[
-            "https://i.ibb.co.com/prhfZ1Cg/banner-image.webp",
-            "https://i.ibb.co.com/rf3kprph/banner-image-2.webp",
-            "https://i.ibb.co.com/8DYHLnwk/banner-image-3.webp",
-          ].map((url, idx) => (
-            <div
-              key={idx}
-              className="w-full lg:w-1/3 h-72 content-center px-6 py-6"
-              style={{
-                backgroundImage: `url(${url})`,
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-              }}
-            >
-              <p className="text-base text-red-500">New Arrival</p>
-              <h1 className="text-white font-bold text-2xl md:text-3xl leading-tight">
-                Latest QPad <br /> With Keyboard
-              </h1>
-              <button className="mt-2 cursor-pointer border-b-2 text-white">Buy Now</button>
-            </div>
-          ))}
-        </div> */}
-
-      {/* Category Section */}
-      {/* <div className="mt-12 lg:mt-32 px-4">
-        <div className="text-center flex justify-center items-center flex-col space-y-4">
-          <h1 className="text-3xl lg:text-5xl font-semibold">Choose Your Category</h1>
-          <p className="max-w-2xl">
-            Smartwatches provide quick access to notifications, calls, messages, and apps right on your wrist, reducing the need to constantly check your phone.
-          </p>
-        </div>
-        <div className="flex flex-wrap justify-center gap-6 mt-12 max-w-screen-xl mx-auto">
-          {[
-            {
-              title: "Home Appliances",
-              url: "https://i.ibb.co.com/ZRZX4YbP/Rectangle-395.webp",
-            },
-            {
-              title: "PC & Laptops",
-              url: "https://i.ibb.co.com/zWtqn9HS/Rectangle-396.webp",
-            },
-            {
-              title: "Kitchen Appliances",
-              url: "https://i.ibb.co.com/Hpn9ybzJ/Rectangle-397.webp",
-            },
-            {
-              title: "Phone & Tablet",
-              url: "https://i.ibb.co.com/kgCfZ5Kt/Rectangle-398.webp",
-            },
-            {
-              title: "Accessories",
-              url: "https://i.ibb.co.com/V0jfqtxK/Rectangle-399.webp",
-            },
-          ].map((item, idx) => (
-            <div
-              key={idx}
-              className="flex flex-col justify-center items-center gap-3 group cursor-pointer"
-            >
-              <div className="w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden relative">
-                <img
-                  src={item.url}
-                  className="w-full h-full object-cover rounded-full transition-transform duration-300 absolute group-hover:scale-110"
-                  alt={item.title}
-                />
-              </div>
-              <h1 className="font-semibold text-xl md:text-2xl">{item.title}</h1>
-              <p>1 Item</p>
-            </div>
-          ))}
-        </div>
-      </div> */}
+      
 
       {/* Featured Section */}
       <div className="my-14 lg:my-32 px-4 text-center space-y-5 max-w-screen-xl mx-auto">

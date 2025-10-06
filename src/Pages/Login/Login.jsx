@@ -5,11 +5,13 @@ import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { getCartProducts } from '../../Utils/LocalStroage';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const Login = () => {
     const { login , GoogleSignin} = useContext(AuthContext);
     const navigate = useNavigate();
     const [showPass, setShowPass] = useState(false);
+    const axiosSecure = useAxiosSecure()
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -26,7 +28,7 @@ const Login = () => {
             const products = getCartProducts(); // Assuming this returns array of product objects
 
             // Only send to backend if products array exists and has length > 0
-            if (products && products.length > 0) {
+            if (products && products.length > 0 && user) {
                 try {
                     // Make sure each product has _id or productId (needed by backend)
                     const formattedProducts = products.map((p) => ({
@@ -35,10 +37,11 @@ const Login = () => {
                         productId: p._id || p.productId || p.id,
                     }));
 
-                    await axios.post('https://elara-international-server.onrender.com/cartProducts/bulk', {
+                    const {data} = await axiosSecure.post('/cartProducts/bulk', {
                         email: user.email,
                         products: formattedProducts,
                     });
+                    console.log(data);
 
                     // Remove local cart only if server sync is successful
                     localStorage.removeItem('cartProducts');

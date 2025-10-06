@@ -2,26 +2,13 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import AllProductCard from "../AllProductCard/AllProductCard";
 import { HashLoader, PropagateLoader } from "react-spinners";
+import useSpecificCategoryProduct from "../../Hooks/useSpecificCategoryProduct";
+import LoadingSpinner from "../Loader/LoadingSpinner";
 
 const AllTrimmers = () => {
-    const [trimmers, setTrimmers] = useState([]);
-    const [loading, setLoading] = useState(true)
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true)
-                const res = await axios.get(`https://elara-international-server.onrender.com/products?category=Trimmer`);
-                setTrimmers(res.data);
-                setLoading(false)
-            } catch (err) {
-                console.error("Failed to fetch trimmers:", err);
-            }
-        };
+    const { products: trimmers, isLoading, refetch } = useSpecificCategoryProduct('Trimmer');
 
-        fetchData();
-    }, []);
-
-    console.log(trimmers); // will show correct data after fetching
+    if (isLoading) return <LoadingSpinner></LoadingSpinner>
 
     return (
         <div>
@@ -33,14 +20,11 @@ const AllTrimmers = () => {
             </div>
 
             {/* Example: Display trimmer names */}
-            {
-                loading ? <div className="min-h-screen flex items-center justify-center">
-                    <PropagateLoader color="#FCAB35" size={20} />
-                </div> :
-                <div className="md:flex grid grid-cols-2 md:flex-row flex-wrap px-4 md:px-0 md:gap-18 gap-2  mt-12">
+
+            <div className="md:flex grid grid-cols-2 md:flex-row flex-wrap px-4 md:px-0 md:gap-18 gap-2  mt-12">
                 {trimmers.map((item, index) => <AllProductCard product={item} key={index}></AllProductCard>)}
             </div>
-            }
+
         </div>
     );
 };

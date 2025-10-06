@@ -1,63 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AllProductCard from "../../Components/AllProductCard/AllProductCard";
-import axios from "axios";
 import { FiFilter } from "react-icons/fi";
-import { HashLoader } from "react-spinners";
+import useAllProducts from "../../Hooks/useAllProducts";
+import LoadingSpinner from "../../Components/Loader/LoadingSpinner";
+import useAllCategories from "../../Hooks/useAllCategories";
 
 const AllProducts = () => {
-  const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);  // Initially loading true
-
+  const { allProducts, isLoading} = useAllProducts(selectedCategory);
+  
   // Fetch categories
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        setLoading(true);  // start loading on fetch categories
-        const res = await axios.get("https://elara-international-server.onrender.com/categories");
-        setCategories(res.data);
-      } catch (error) {
-        console.error("Failed to fetch categories", error);
-      } finally {
-        setLoading(false);  // stop loading after categories fetch
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
-  // Fetch products based on selected category
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);  // start loading when fetching products
-
-        const url = selectedCategory
-          ? `https://elara-international-server.onrender.com/products?category=${selectedCategory}`
-          : "https://elara-international-server.onrender.com/products";
-
-        const res = await axios.get(url);
-        setProducts(res.data);
-
-      } catch (error) {
-        console.error("Failed to fetch products", error);
-      } finally {
-        setLoading(false);  // stop loading after products fetch
-      }
-    };
-
-    fetchProducts();
-  }, [selectedCategory]);
-
-  // If loading is true, show loader with some padding/centered
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <HashLoader color="#FCAB35" size={60} />
-      </div>
-    );
-  }
+  const {categories, isLoading: categoriesLoading} = useAllCategories();
+  if(categoriesLoading || isLoading) return <LoadingSpinner></LoadingSpinner>
 
   return (
     <div className="mx-auto px-6 lg:max-w-7xl max-w-lg my-12 md:max-w-4xl">
@@ -100,7 +54,7 @@ const AllProducts = () => {
 
       {/* Products Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
-        {products.map((product, idx) => (
+        {allProducts.map((product, idx) => (
           <AllProductCard key={idx} product={product} />
         ))}
       </div>
