@@ -1,121 +1,48 @@
-import React, { useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../Provider/AuthProvider';
-import Swal from 'sweetalert2';
-import axios from 'axios';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getCartProducts } from '../../Utils/LocalStroage';
-import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import useAuth from '../../Hooks/useAuth';
+import useAddToCart from '../../Hooks/useAddToCart';
+import toast from 'react-hot-toast';
+import useLocalCart from '../../Utils/useLocalCart';
+import axios from 'axios';
+import { HashLoader } from 'react-spinners';
 
 const Login = () => {
-    const { login , GoogleSignin} = useContext(AuthContext);
+    const { login, GoogleSignin, user, loading, tokenReady } = useAuth();
     const navigate = useNavigate();
     const [showPass, setShowPass] = useState(false);
-    const axiosSecure = useAxiosSecure()
+    const { syncLocalCart } = useAddToCart()
+    const { cartProducts } = useLocalCart()
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/'
 
     const handleLogin = async (e) => {
         e.preventDefault();
         const form = new FormData(e.currentTarget);
         const email = form.get('email');
         const password = form.get('password');
-
-        try {
-            // Call your login function
-            const res = await login(email, password);
-            const user = res.user;
-
-            // Fetch local cart products synchronously from localStorage or your store
-            const products = getCartProducts(); // Assuming this returns array of product objects
-
-            // Only send to backend if products array exists and has length > 0
-            if (products && products.length > 0 && user) {
-                try {
-                    // Make sure each product has _id or productId (needed by backend)
-                    const formattedProducts = products.map((p) => ({
-                        ...p,
-                        // Ensure productId field exists for backend to process correctly
-                        productId: p._id || p.productId || p.id,
-                    }));
-
-                    const {data} = await axiosSecure.post('/cartProducts/bulk', {
-                        email: user.email,
-                        products: formattedProducts,
-                    });
-                    console.log(data);
-
-                    // Remove local cart only if server sync is successful
-                    localStorage.removeItem('cartProducts');
-                    console.log("Products synced with server");
-                } catch (syncError) {
-                    console.error("Failed to sync cart products with server:", syncError);
-                    // Optional: Show error to user or keep local cart intact for retry
-                }
-            }
-
-            Swal.fire({
-                icon: "success",
-                title: "Logged in",
-            });
-
-            navigate('/');
-        } catch (error) {
-            console.error("Login failed:", error);
-            Swal.fire({
-                icon: "error",
-                title: "Login Failed",
-                text: error.message || "Something went wrong",
-            });
+        console.log('before login', loading);
+        const res = await login(email, password); 
+         console.log(res);
+        console.log('after login',loading);
+        if (res?.user) {
+            toast.success('Login Successful');
+            navigate(from)
         }
     };
 
+    useEffect(() => {
+        if (user && tokenReady && cartProducts.length > 0) {
+            syncLocalCart();
+            console.log('test');
+        }
+    }, [user, tokenReady, cartProducts]);
+
 
     const handleGoogleLogin = async () => {
-        try {
-            // Call your login function
-            const res = await GoogleSignin();
-            const user = res.user;
-
-            // Fetch local cart products synchronously from localStorage or your store
-            const products = getCartProducts(); // Assuming this returns array of product objects
-
-            // Only send to backend if products array exists and has length > 0
-            if (products && products.length > 0) {
-                try {
-                    // Make sure each product has _id or productId (needed by backend)
-                    const formattedProducts = products.map((p) => ({
-                        ...p,
-                        // Ensure productId field exists for backend to process correctly
-                        productId: p._id || p.productId || p.id,
-                    }));
-
-                    await axios.post('https://elara-international-server.onrender.com/cartProducts/bulk', {
-                        email: user.email,
-                        products: formattedProducts,
-                    });
-
-                    // Remove local cart only if server sync is successful
-                    localStorage.removeItem('cartProducts');
-                    console.log("Products synced with server");
-                } catch (syncError) {
-                    console.error("Failed to sync cart products with server:", syncError);
-                    // Optional: Show error to user or keep local cart intact for retry
-                }
-            }
-
-            Swal.fire({
-                icon: "success",
-                title: "Logged in",
-            });
-
-            navigate('/');
-        } catch (error) {
-            console.error("Login failed:", error);
-            Swal.fire({
-                icon: "error",
-                title: "Login Failed",
-                text: error.message || "Something went wrong",
-            });
-        }
+        //    await GoogleSignin();
     }
 
     return (
@@ -184,7 +111,7 @@ const Login = () => {
                 </div>
 
                 <div className="mt-6">
-                    <button className="btn font-rancho bg-[#FCAB35] text-xl w-full">Login</button>
+                    {loading ? <button disabled={loading} className="btn font-rancho bg-[#FCAB35] text-xl w-full"><HashLoader size={15} color='#FCAB35'></HashLoader></button> : <button className="btn font-rancho bg-[#FCAB35] text-xl w-full">Login</button>}
                     <p className="text-base-400 text-sm text-center mt-2">
                         Don't have an account?{" "}
                         <Link className="text-green-500 font-bold" to={"/register"}>

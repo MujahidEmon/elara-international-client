@@ -5,20 +5,21 @@ import { FaOpencart } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { MdDeleteForever } from "react-icons/md";
 import PropTypes from "prop-types";
-import HandleAddToCart from "../../Hooks/HandleAddToCart";
+import HandleAddToCart from "../../Hooks/useAddToCart";
 import CartSlider from "../CartSlider/CartSlider";
+import useCartProducts from "../../Hooks/useCartProducts";
 
 const AllProductCard = ({ product }) => {
-  const {  totalPrice, handleRemoveFromCart } = useContext(AuthContext);
   const [showCartSlider, setShowCartSlider] = useState(false);
-  const [handleAddToCart, cartProducts] = HandleAddToCart();
+  const {handleAddToCart, cartProducts} = HandleAddToCart();
+  const {refetch} = useCartProducts()
 
   const addToCartWithFeedback = (product) => {
     handleAddToCart(product);
     setShowCartSlider(true);
-
+    refetch()
     // Auto-hide after 8 seconds
-    setTimeout(() => setShowCartSlider(false), 10000);
+    setTimeout(() => setShowCartSlider(false), 5000);
   };
 
   return (

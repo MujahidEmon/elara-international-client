@@ -1,13 +1,20 @@
-import { useContext } from "react";
-import { deleteFromCart } from "../../Utils/LocalStroage";
-import { AuthContext } from "../../Provider/AuthProvider";
+import useDeleteCartItem from "../../Hooks/useDeleteCartItem";
+import useModifyCartItems from "../../Hooks/useModifyCartItems";
+
+
 
 const CartCard = ({ product }) => {
   // console.log(product);
 
-  const { handleRemoveFromCart, handleDecrease, handleIncrease } = useContext(AuthContext)
+  const { handleIncrease, handleDecrease } = useModifyCartItems(product);
+  const {handleDelete} = useDeleteCartItem(product)
 
-
+  const handleCartIncrease = async () => {
+    await handleIncrease()
+  }
+  const handleCartDecrease = async () => {
+    await handleDecrease()
+  }
 
   return (
     <div className="flex border-[#FCAB35] border  gap-4 bg-base text-base px-4 py-6 rounded-md shadow-2xl">
@@ -32,9 +39,9 @@ const CartCard = ({ product }) => {
 
           <div className="mt-auto flex items-center gap-3">
             <button
-              onClick={() => handleDecrease(product)}
+              onClick={handleCartDecrease}
               type="button"
-              className="flex items-center justify-center w-5 h-5 bg-base outline-none rounded-full"
+              className="flex items-center justify-center w-5 h-5 bg-slate-800 cursor-pointer outline-none rounded-full"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -49,9 +56,9 @@ const CartCard = ({ product }) => {
             </button>
             <span className="font-semibold text-sm leading-[18px]">{product.quantity}</span>
             <button
-              onClick={() => handleIncrease(product)}
+              onClick={handleCartIncrease}
               type="button"
-              className="flex items-center justify-center w-5 h-5 bg-slate-800 outline-none rounded-full"
+              className="flex items-center justify-center w-5 h-5 bg-slate-800 cursor-pointer outline-none rounded-full"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +80,7 @@ const CartCard = ({ product }) => {
 
 
           {/* Remove from Cart Button */}
-          <button onClick={() => handleRemoveFromCart(product._id)}>
+          <button onClick={handleDelete}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="w-4 h-4 cursor-pointer fill-slate-400 hover:fill-red-600 inline-block"

@@ -1,7 +1,4 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
 import AllProductCard from "../AllProductCard/AllProductCard";
-import { HashLoader, PropagateLoader } from "react-spinners";
 import useSpecificCategoryProduct from "../../Hooks/useSpecificCategoryProduct";
 import LoadingSpinner from "../Loader/LoadingSpinner";
 

@@ -1,8 +1,34 @@
 import PropTypes from "prop-types";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import useCartProducts from "../../Hooks/useCartProducts";
+import { MdDeleteForever } from "react-icons/md";
+import useDeleteCartItem from "../../Hooks/useDeleteCartItem";
+import axios from "axios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import useAuth from "../../Hooks/useAuth";
+import { deleteFromCart } from "../../Utils/LocalStroage";
 
-const CartSlider = ({ showCartSlider, setShowCartSlider,  cartProducts}) => {
+const CartSlider = ({ showCartSlider, setShowCartSlider, product }) => {
+    const axiosSecure = useAxiosSecure();
+    const { cartProducts, refetch } = useCartProducts();
+    const { user } = useAuth()
+    const handleDelete = async (p) => {
+        if (user) {
+            const { data } = await axiosSecure.delete(`/cartProduct/${p._id}`)
+            console.log(data);
+            // toast.success(data)
+            refetch()
+            data.deletedCount >= 1 && toast.success(`${p.productName} removed from cart`)
+            return data;
+        }
+        else{
+            deleteFromCart(p)
+        }
+    }
+
+    // console.log(product);
     return (
         <div>
             <AnimatePresence>
@@ -49,15 +75,16 @@ const CartSlider = ({ showCartSlider, setShowCartSlider,  cartProducts}) => {
                                                     <h4 className="text-sm font-medium text-left text-gray-100 truncate max-w-[80%]">
                                                         {item.productName}
                                                     </h4>
-                                                    {/* <button onClick={() => handleRemoveFromCart(item._id)}>
+                                                    <button onClick={() => handleDelete(item)}>
                                                         <MdDeleteForever size={20} color="#FCAB35" />
-                                                    </button> */}
+                                                    </button>
                                                 </div>
                                                 <p className="text-gray-400">
                                                     {item.quantity}
                                                     <span> × </span>
                                                     <span className="text-[#FCAB35]">{item.price} Taka</span>
                                                 </p>
+
                                             </div>
                                         </div>
                                     ))}
@@ -96,9 +123,9 @@ const CartSlider = ({ showCartSlider, setShowCartSlider,  cartProducts}) => {
     );
 };
 
-CartSlider.propTypes ={
+CartSlider.propTypes = {
     showCartSlider: PropTypes.bool,
-    setShowCartSlider:PropTypes.func,
+    setShowCartSlider: PropTypes.func,
     product: PropTypes.object,
     cartProducts: PropTypes.array
 }

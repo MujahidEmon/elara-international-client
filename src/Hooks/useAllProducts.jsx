@@ -9,7 +9,7 @@ const useAllProducts = (selectedCategory) => {
         queryFn: async () => {
             const url = selectedCategory ? `/products?category=${selectedCategory}` : '/products';
             const {data} = await axiosPublic.get(url);
-            return data;
+            return data;    
         }
     })
 
