@@ -14,7 +14,8 @@ export const getCartProducts = () => {
 export const saveToCart = (product) => {
   let cartProducts = getCartProducts();
 
-  const isExist = cartProducts.find(p => p._id === product._id);
+  const isExist = cartProducts.find(p => p.productId === product.productId  
+  );
 
   if (isExist) {
     isExist.quantity = (Number(isExist.quantity) || 1) + 1;
@@ -28,18 +29,17 @@ export const saveToCart = (product) => {
 };
 
 // Delete product from cart
-export const deleteFromCart = (_id) => {
+export const deleteFromCart = (p) => {
   let cartProducts = getCartProducts();
-  const remaining = cartProducts.filter(b => b._id !== _id);
+  const remaining = cartProducts.filter(b => b.productId !== p.productId);
   localStorage.setItem('cartProducts', JSON.stringify(remaining));
-  toast.success('Removed from cart');
 };
 
 // Increase quantity
 export const incrementFromCart = (id) => {
   const cart = getCartProducts();
   const updated = cart.map(item =>
-    item._id === id ? { ...item, quantity: Number(item.quantity) + 1 } : item
+    item.productId === id ? { ...item, quantity: Number(item.quantity) + 1 } : item
   );
   localStorage.setItem('cartProducts', JSON.stringify(updated));
   return updated;
@@ -48,15 +48,15 @@ export const incrementFromCart = (id) => {
 // Decrease quantity (or remove if quantity becomes 0)
 export const decrementFromCart = (id) => {
   let cart = getCartProducts();
-  const item = cart.find(p => p._id === id);
+  const item = cart.find(p => p.productId === id);
 
   if (item) {
     if (item.quantity > 1) {
       cart = cart.map(p =>
-        p._id === id ? { ...p, quantity: Number(p.quantity) - 1 } : p
+        p.productId === id ? { ...p, quantity: Number(p.quantity) - 1 } : p
       );
     } else {
-      cart = cart.filter(p => p._id !== id);
+      cart = cart.filter(p => p.productId !== id);
       toast.success('Removed from cart');
     }
   }

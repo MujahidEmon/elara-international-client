@@ -1,24 +1,11 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
 import AllProductCard from "../AllProductCard/AllProductCard";
+import useSpecificCategoryProduct from "../../Hooks/useSpecificCategoryProduct";
+import LoadingSpinner from "../Loader/LoadingSpinner";
 
 const AllTrimmers = () => {
-    const [trimmers, setTrimmers] = useState([]);
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get(`https://https://elara-international-server.onrender.com/products/products?category=Trimmer`);
-                setTrimmers(res.data);
-            } catch (err) {
-                console.error("Failed to fetch trimmers:", err);
-            }
-        };
+    const { products: trimmers, isLoading, refetch } = useSpecificCategoryProduct('Trimmer');
 
-        fetchData();
-    }, []);
-
-    console.log(trimmers); // will show correct data after fetching
+    if (isLoading) return <LoadingSpinner></LoadingSpinner>
 
     return (
         <div>
@@ -30,9 +17,11 @@ const AllTrimmers = () => {
             </div>
 
             {/* Example: Display trimmer names */}
+
             <div className="md:flex grid grid-cols-2 md:flex-row flex-wrap px-4 md:px-0 md:gap-18 gap-2  mt-12">
                 {trimmers.map((item, index) => <AllProductCard product={item} key={index}></AllProductCard>)}
             </div>
+
         </div>
     );
 };

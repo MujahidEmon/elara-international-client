@@ -1,61 +1,84 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import axios from "axios";
+import useCartProducts from "../../Hooks/useCartProducts";
 
 const Navbar = () => {
 
-  // importing logout function
-  const { logout, user, cartProducts, totalPrice } = useContext(AuthContext);
-  // const products = getCartProducts()
-  // console.log(user.photoURL);
-  const handleLogout = () => {
-    logout()
-      .then(
+  const { cartProducts, totalCartPrice } = useCartProducts();
+  const { logout, user } = useContext(AuthContext);
 
-    )
-      .catch(error => console.error(error)
-      )
+  const handleLogout = async () => {
+    logout()
   }
 
   return (
-    <div className="navbar sticky top-0 z-50 backdrop-blur-md bg-white/20 shadow-md">
-      <div className="flex-1">
+    <div className="navbar sticky top-0 z-50 backdrop-blur-md bg-black/70 shadow-md">
+      <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h7"
-              />
-            </svg>
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
           </div>
           <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             <li>
-              <Link to={'/'}>Home</Link>
+              <NavLink className={({ isActive }) =>
+                isActive
+                  ? " text-white font-semibold px-4 py-2 bg-[#FCAB35]"
+                  : " text-white px-4 py-2 hover:text-[#FCAB35] transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-[#FCAB35] after:w-0 hover:after:w-full after:transition-all after:duration-300"
+              } to={'/'}>Home</NavLink>
             </li>
             <li>
-              <Link to={'/allProducts'}>All Products</Link>
+              <NavLink className={({ isActive }) =>
+                isActive
+                  ? " text-white font-semibold px-4 py-2 bg-[#FCAB35]"
+                  : " text-white px-4 py-2 hover:text-[#FCAB35] transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-[#FCAB35] after:w-0 hover:after:w-full after:transition-all after:duration-300"
+              } to={'/allProducts'}>All Products</NavLink>
             </li>
             <li>
-              <Link>Contact Us</Link>
+              <NavLink className={({ isActive }) =>
+                isActive
+                  ? " text-white font-semibold px-4 py-2 bg-[#FCAB35]"
+                  : " text-white px-4 py-2 hover:text-[#FCAB35] transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-[#FCAB35] after:w-0 hover:after:w-full after:transition-all after:duration-300"
+              } to={'/contact'}>Contact Us</NavLink>
             </li>
           </ul>
         </div>
-        <Link to={'/'} className="btn btn-ghost text-xl"><span className="text-[#FCAB35]">Elara</span> International</Link>
+        <Link to={'/'} className=" bg-transparent border-0 ml-0 pl-0 md:pl-auto md:text-2xl text-white font-semibold"><span className="text-[#FCAB35]">Elara</span> International</Link>
       </div>
-      <p className="font-semibold lg:flex hidden mr-3">{user?.displayName}</p>
-      <div className="flex-none">
+      <div className="navbar-center hidden lg:flex">
+        <ul
+          className="menu menu-horizontal px-1"
+        >
+          <li>
+            <NavLink className={({ isActive }) =>
+              isActive
+                ? " text-white font-semibold px-4 py-2 bg-[#FCAB35]"
+                : " text-white px-4 py-2 hover:text-[#FCAB35] transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-[#FCAB35] after:w-0 hover:after:w-full after:transition-all after:duration-300"
+            }
+              to={'/'}>Home</NavLink>
+          </li>
+          <li>
+            <NavLink className={({ isActive }) =>
+              isActive
+                ? " text-white font-semibold px-4 py-2 bg-[#FCAB35]"
+                : " text-white px-4 py-2 hover:text-[#FCAB35] transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-[#FCAB35] after:w-0 hover:after:w-full after:transition-all after:duration-300"
+            }
+              to={'/allProducts'}>All Products</NavLink>
+          </li>
+          <li>
+            <NavLink className={({ isActive }) =>
+              isActive
+                ? " text-white font-semibold px-4 py-2 bg-[#FCAB35]"
+                : " text-white px-4 py-2 hover:text-[#FCAB35] transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-[#FCAB35] after:w-0 hover:after:w-full after:transition-all after:duration-300"
+            } to={'/contact'}>Contact Us</NavLink>
+          </li>
+        </ul>
+      </div>
+      <div className="navbar-end">
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
             <div className="indicator ">
@@ -82,31 +105,34 @@ const Navbar = () => {
           >
             <div className="card-body">
               <span className="text-lg text-[#FCAB35] font-bold">{cartProducts.length} Items</span>
-              <span className="text-[#FCAB35]">Subtotal: BDT {totalPrice}</span>
+              <span className="text-[#FCAB35]">Subtotal: BDT {totalCartPrice}</span>
               <div className="card-actions">
                 <Link to={'/cart'} className="btn border-[#FCAB35] text-[#FCAB35] btn-outline">View cart</Link>
               </div>
             </div>
           </div>
         </div>
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost ml-4 btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src={user ? user?.photoURL : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
-              />
-            </div>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-          >
-            {/* <li>
+
+        {
+          user ?
+            <div className="dropdown dropdown-end">
+             <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost ml-4 btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="Tailwind CSS Navbar component"
+                      src={user ? user?.photoURL : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                    />
+                  </div>
+                </div> 
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-200 rounded-sm z-[1] mt-3 w-36 p-2 shadow"
+              >
+                {/* <li>  
               <a className="justify-between">
                 Profile
                 <span className="badge">New</span>
@@ -115,11 +141,18 @@ const Navbar = () => {
             <li>
               <a>Settings</a>
             </li> */}
-            <li>
-              {user ? <button onClick={handleLogout}>Logout</button> : <Link to={'/login'}>Login</Link>}
-            </li>
-          </ul>
-        </div>
+                {/* <h1 className="font-semibold lg:flex hidden mr-3">{user?.displayName}</h1> */}
+                <li>
+                  {user ? <button className="text-black text-base font-semibold px-2 py-2  transition duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-black after:w-0 hover:after:w-full after:transition-all after:duration-300" onClick={handleLogout}>Logout</button> : <Link to={'/login'}>Login</Link>}
+                </li>
+              </ul>
+            </div>
+
+            :
+            <Link to={'/login'}><button className="btn shadow-none md:text-base text-sm bg-[#FCAB35] border-0 ml-3 text-black rounded-sm">Login</button></Link>
+
+        }
+
       </div>
     </div>
   );

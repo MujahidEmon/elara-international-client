@@ -1,10 +1,39 @@
-import { useContext } from "react";
 import CartCard from "../../Components/CartCard/CartCard";
-import { AuthContext } from "../../Provider/AuthProvider";
 import { Link } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import LoadingSpinner from "../../Components/Loader/LoadingSpinner";
+import { useState } from "react";
+import useCartProducts from "../../Hooks/useCartProducts";
+
+
 
 const ProductCart = () => {
-  const { cartProducts, totalPrice, grandTotal } = useContext(AuthContext);
+  const {user} = useAuth()
+  const axiosSecure = useAxiosSecure();
+  // const [cartProducts, setCartProducts] = useState([]);
+
+  const {cartProducts, refetch, totalCartPrice , isLoading} = useCartProducts()
+  const grandTotal = totalCartPrice + 110;
+
+  // const { data: products = [], isLoading, refetch } = useQuery({
+  //   queryKey: ['cartProducts', user?.email],
+  //   enabled: !!user, // only runs when user exists
+  //   queryFn: async () => {
+  //     const { data } = await axiosSecure.get(`/cartProducts/${user.email}`);
+  //     setCartProducts(products);
+  //     return data;
+  //   },
+  // });
+
+  console.log(cartProducts);
+
+
+  
+
+
+  if(isLoading) return <LoadingSpinner></LoadingSpinner>
 
   return (
     <div className="max-w-5xl min-h-[calc(100vh-260px)] max-md:max-w-xl mx-auto p-4">
@@ -12,7 +41,7 @@ const ProductCart = () => {
       <div className="grid md:grid-cols-3 gap-10 mt-8">
         {/* left side */}
         <div className="md:col-span-2 space-y-4">
-          {cartProducts.length==0 ? <Link className=" flex  items-center" to={'/allProducts'}><button className="btn btn-outline w-full mt-24 border-[#FCAB35] text-[#FCAB35]">Browse Product</button></Link>: cartProducts.map((product, idx) => (
+          {cartProducts.length == 0 ? <Link className=" flex  items-center" to={'/allProducts'}><button className="btn btn-outline w-full mt-24 border-[#FCAB35] text-[#FCAB35]">Browse Product</button></Link> : cartProducts.map((product, idx) => (
             <CartCard key={idx} product={product}></CartCard>
           ))}
         </div>
@@ -22,10 +51,10 @@ const ProductCart = () => {
           <ul className="text-base-100 font-medium space-y-4">
             <li className="flex flex-wrap gap-4 text-sm">
               Subtotal{" "}
-              <span className="ml-auto font-semibold">BDT {totalPrice}</span>
+              <span className="ml-auto font-semibold">BDT{totalCartPrice}</span>
             </li>
             <li className="flex flex-wrap gap-4 text-sm">
-              Shipping <span className="ml-auto font-semibold">BDT 120</span>
+              Shipping <span className="ml-auto font-semibold">BDT 110</span>
             </li>
 
             <hr className="border-slate-300" />
@@ -37,7 +66,7 @@ const ProductCart = () => {
           <div className="mt-8 space-y-2">
             <button
               type="button"
-              className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-slate-800 hover:bg-slate-900 text-white rounded-md"
+              className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-[#FCAB35] hover:bg-[#fcac35dd] text-white rounded-md"
             >
               <Link to={'/checkout'}>Buy Now</Link>
             </button>

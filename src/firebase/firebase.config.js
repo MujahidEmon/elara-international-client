@@ -6,12 +6,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBxlvbf836L0IUtDUBPKOhAbPVQXXI-R7k",
-  authDomain: "elara-international.firebaseapp.com",
-  projectId: "elara-international",
-  storageBucket: "elara-international.firebasestorage.app",
-  messagingSenderId: "606093877169",
-  appId: "1:606093877169:web:6409858fb2d9e114b2a790"
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
 };
 
 // Initialize Firebase

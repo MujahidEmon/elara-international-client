@@ -40,7 +40,7 @@ const Checkout = () => {
 
   try {
     // Place the order
-    const orderRes = await fetch("https://https://elara-international-server.onrender.com/products/orders", {
+    const orderRes = await fetch("https://elara-international-server.onrender.com/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const Checkout = () => {
     // === Clear cart conditionally ===
     if (user?.email) {
       // If user is logged in, clear cart from database
-      const clearRes = await fetch(`https://https://elara-international-server.onrender.com/products/cartProducts/clear/${encodeURIComponent(user.email)}`, {
+      const clearRes = await fetch(`https://elara-international-server.onrender.com/cartProducts/clear/${encodeURIComponent(user.email)}`, {
         method: "DELETE",
       });
 
@@ -122,13 +122,13 @@ const Checkout = () => {
                         htmlFor="your_name"
                         className="block mb-2 text-sm font-medium"
                       >
-                        Your Name
+                        Your Name*
                       </label>
                       <input
                         type="text"
                         id="your_name"
                         name="name"
-                        placeholder="Bonnie Green"
+                        placeholder="Enter Your Name"
                         required
                         className="w-full rounded-lg border border-gray-700 bg-gray-900 bg-opacity-80 px-4 py-2 text-sm text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       />
@@ -139,14 +139,14 @@ const Checkout = () => {
                         htmlFor="your_email"
                         className="block mb-2 text-sm font-medium"
                       >
-                        Your Email*
+                        Your Email
                       </label>
                       <input
                         type="email"
                         id="your_email"
                         name="email"
-                        placeholder="name@example.com"
-                        required
+                        placeholder="Enter Your Email Address"
+                      
                         className="w-full rounded-lg border border-gray-700 bg-gray-900 bg-opacity-80 px-4 py-2 text-sm text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       />
                     </div>
@@ -174,13 +174,13 @@ const Checkout = () => {
                         htmlFor="full_address"
                         className="block mb-2 text-sm font-medium"
                       >
-                        Full Address
+                        Full Address*
                       </label>
                       <input
                         type="text"
                         id="full_address"
                         name="address"
-                        placeholder="Enter Your Full Address"
+                        placeholder="Vill: , Upozilla: , Zilla:"
                         required
                         className="w-full rounded-lg border border-gray-700 bg-gray-900 bg-opacity-80 px-4 py-2 text-sm text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       />
@@ -205,7 +205,7 @@ const Checkout = () => {
                     <div className="sm:col-span-2">
                       <button
                         type="submit"
-                        className="w-full flex items-center justify-center gap-3 rounded-lg bg-indigo-600 px-6 py-3 text-white text-lg font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition"
+                        className="w-full flex items-center justify-center gap-3 rounded-lg bg-[#FCAB35] px-6 py-3 text-white text-lg font-semibold hover:bg-[#fcac35dd] focus:outline-none focus:ring-4  transition"
                       >
                         <GiConfirmed size={22} />
                         Place Order
@@ -250,7 +250,7 @@ const Checkout = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>Shipping</span>
-                    <span>BDT 50</span>
+                    <span>BDT 110</span>
                   </div>
                 </div>
 
